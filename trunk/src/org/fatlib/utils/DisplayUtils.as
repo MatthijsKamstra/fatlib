@@ -6,6 +6,8 @@ package org.fatlib.utils
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
+	import org.fatlib.display.Button;
+	import org.fatlib.display.Text;
 	import org.fatlib.interfaces.IIterator;
 	import org.fatlib.iterators.ArrayIterator;
 	import org.fatlib.iterators.ChildIterator;
@@ -72,10 +74,11 @@ package org.fatlib.utils
 		 * @param	col		The color of the circle
 		 * @return	A Sprite with a circle drawn onto its 'graphics' property
 		 */
-		public static function createCircle(radius:Number=5, col:int=0x999999):Sprite
+		public static function createCircle(radius:Number = 5, col:int = 0x999999, border:Boolean = false):Sprite
 		{
 			var b:Sprite = new Sprite();
 			b.graphics.clear();
+			if (border) b.graphics.lineStyle(1, 0);
 			b.graphics.beginFill(col);
 			b.graphics.drawCircle(0, 0, radius);
 			b.graphics.endFill();
@@ -91,34 +94,36 @@ package org.fatlib.utils
 		 * @param	col	The color of the rectanhle
 		 * @return	a Sprite with a rectangle drawn onto its 'graphics' property
 		 */
-		public static function createRectangle(x:Number, y:Number, w:Number, h:Number, col:int = 0x000000):Sprite
+		public static function createRectangle(x:Number, y:Number, w:Number, h:Number, col:int = 0x000000, border:Boolean = false):Sprite
 		{
 			var b:Sprite = new Sprite();
 			b.graphics.clear();
+			if (border) b.graphics.lineStyle(1, 0);
 			b.graphics.beginFill(col);
 			b.graphics.drawRect(x, y, w, h);
 			b.graphics.endFill();
 			return b;
 		}
-
+					
 		/**
-		 * Creates a TextField for debugging
+		 * Creates a wireframe button
 		 * 
-		 * @param	text		The text to display 
-		 * @param	fontSize	The text font size
-		 * @param	color		The text font color
-		 * @return	A TextField with the specified properties
+		 * @param	name	The name of the button
+		 * @return	A wireframe button with the given name
 		 */
-		public static function createTextField(text:String, fontSize:int = 10, color:int = 0x000000):TextField
+		public static function createWireframeButton(name:String):Button
 		{
-			var t:TextField = new TextField();
-			t.defaultTextFormat = new TextFormat('_sans', fontSize, color);
-			t.selectable = t.mouseEnabled = false;
-			t.autoSize = TextFieldAutoSize.LEFT;
-			t.text = text;
-			return t;
+			var b:Button = new Button();
+			var up:Sprite = createRectangle(0, 0, 100, 20, 0xFFFFFF, true);
+			up.addChild(new Text(name));
+			var over:Sprite = createRectangle(0, 0, 100, 20, 0x000000);
+			over.addChild(new Text(name, null, 0, false, 0xFFFFFF));
+			b.registerState(Button.UP, up)
+			b.registerState(Button.OVER, over);
+			b.name = name;
+			return b;
 		}
-
+		
 		/**
 		 * Centres the object, based on its current width and height, to a target's centre
 		 */

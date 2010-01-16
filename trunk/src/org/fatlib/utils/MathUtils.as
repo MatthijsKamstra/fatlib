@@ -90,7 +90,7 @@ package org.fatlib.utils
 			
 			if (b1 < b0)
 			{
-				var temp:Number = b1;
+				temp = b1;
 				b1 = b0;
 				b0 = temp;
 			}
