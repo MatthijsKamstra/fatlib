@@ -69,6 +69,36 @@ package org.fatlib.utils
 			return Math.abs(x1 - x2) + Math.abs(y1 - y2);
 		}
 	
+		
+		/**
+		 * Determines whether two ranges overlap. 
+		 * 
+		 * @param	a0	min of first range
+		 * @param	a1	max of first range
+		 * @param	b0	min of second range
+		 * @param	b1	max of second range
+		 * @return	Whether the ranges overlap
+		 */
+		public static function rangesOverlap(a0:Number, a1:Number, b0:Number, b1:Number):Boolean
+		{
+			if (a1 < a0)
+			{
+				var temp:Number = a1;
+				a1 = a0;
+				a0 = temp;
+			}
+			
+			if (b1 < b0)
+			{
+				var temp:Number = b1;
+				b1 = b0;
+				b0 = temp;
+			}
+			
+			return (a1 > b0 && a0 < b1);
+		}
+	
+		
 	}
 	
 }
