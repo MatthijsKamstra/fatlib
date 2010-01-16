@@ -1,10 +1,5 @@
 ﻿package org.fatlib.fat3d
 {
-	
-	/**
-	 * ...
-	 * @author DefaultUser (Tools -> Custom Arguments...)
-	 */
 	public class Point3D 
 	{
 		private var _x:Number;

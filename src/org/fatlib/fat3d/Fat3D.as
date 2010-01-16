@@ -28,7 +28,7 @@
 		private var _algorithms:Array;
 		private var _viewport:Rectangle;
 		private var _camera:Camera3D;
-		private var _globalScale:Number = 1;
+		private var _scaleFactor:Number = 1;
 		
 		public function Fat3D(viewport:Rectangle)
 		{
@@ -43,7 +43,7 @@
 			_algorithms = null;
 			for each(var o:Object3D in _objects)
 			{
-				removeChild(o.sprite2D);
+				removeChild(o.container);
 				o.destroy();
 			}
 			_objects = null;
@@ -60,12 +60,12 @@
 		public function addObject(obj:Object3D):void
 		{
 			_objects.push(obj);
-			addChild(obj.sprite2D);
+			addChild(obj.container);
 		}
 		
 		public function removeObject(obj:Object3D):void
 		{
-			removeChild(obj.sprite2D);
+			removeChild(obj.container);
 			ArrayUtils.remove(_objects, obj);
 		}
 				
@@ -112,13 +112,13 @@
 				obj.userData.renderInfo = { dx:dx, dy:dy, dz:dz };
 				
 				obj.render(_camera);
-				if (!obj.sprite2D) continue;
+				if (!obj.container) continue;
 				if ( dz<0) 
 				{
-					obj.sprite2D.visible = false;
+					obj.container.visible = false;
 				} else	{
 					
-					obj.sprite2D.visible = true;
+					obj.container.visible = true;
 					var depth:Number = dz;
 					
 					depths.push({ instance:obj, depth:depth });
@@ -127,12 +127,12 @@
 					{
 						var scale:Number = 1;
 					} else {
-						scale= f * obj.scale * _globalScale;
+						scale= f * obj.scale * scaleFactor;
 					}
 					var scrx:Number = viewX+(dx * f);
 					var scry:Number = viewY + (dy * f);
 					obj.userData.screenInfo = { x:scrx, y: scry };
-					obj.sprite2D.transform.matrix = new Matrix(scale, 0, 0, scale, scrx, scry);
+					obj.container.transform.matrix = new Matrix(scale, 0, 0, scale, scrx, scry);
 				}
 			}
 					
@@ -142,7 +142,7 @@
 			while(--i!=-1)
 			{
 				var o:Object3D = depths[i].instance as Object3D;
-				setChildIndex(o.sprite2D, numChildren - 1);
+				setChildIndex(o.container, numChildren - 1);
 				for each(var algorithm:Function in _algorithms)
 				{
 					algorithm(o);
@@ -150,11 +150,9 @@
 			}
 		}
 		
-		public function get globalScale():Number { return _globalScale; }
-		
-		public function set globalScale(value:Number):void 
+		public function set scaleFactor(value:Number):void 
 		{
-			_globalScale = value;
+			_scaleFactor = value;
 		}
 		
 	}

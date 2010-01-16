@@ -102,6 +102,12 @@ package org.fatlib.utils
 		}
 		
 		
+		/**
+		 * Returns the average of an array of numbers
+		 * 
+		 * @param	a	The array to calculate the average of
+		 * @return	The average of all the elements in the array
+		 */
 		public static function average(a:Array):Number
 		{
 			var total:Number = 0;

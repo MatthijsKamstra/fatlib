@@ -1,6 +1,5 @@
 ﻿package org.fatlib.fat3d
 {
-	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
@@ -30,7 +29,6 @@
 		{
 			_resoDx = viewport.width;
 			_resoDy = viewport.height;
-		
 			
 			var	i:int;
 			container = new Sprite();

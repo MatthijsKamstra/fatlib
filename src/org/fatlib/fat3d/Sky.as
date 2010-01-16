@@ -3,10 +3,6 @@
 	import flash.display.*;
 	import org.fatlib.utils.MathUtils;
 		
-	/**
-	* ...
-	* @author fritz solares <hello@fritzsolares.com>
-	*/
 	public class Sky extends Sprite
 	{
 		private var _length:Number;
@@ -21,14 +17,13 @@
 			addChild(seg2);
 			_length = bmp.width;
 			seg2.x = _length;
-			y = -52;	
 		}
 		
 		public function render(camera:Camera3D):void
 		{
 			x = -(camera.angleY * (_length / ( 2 * Math.PI)));
 			while (x > 0) x -= _length;
-			x = x % 2880;
+			x = x % _length;
 		}
 		
 		public function destroy():void

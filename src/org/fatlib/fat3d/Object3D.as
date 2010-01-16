@@ -14,36 +14,28 @@
 		private var _angleZ:Number=0;
 		
 		private var _graphic:DisplayObject;
-		private var _sprite2D:Sprite;
+		private var _container:Sprite;
 		
 		private var _scale:Number = 1;
-		private var _depth:Number=0;
 		private var _name:String;
 		
-		
-		
-		private var _userData:Object = { };
-		
-		//when set to true, the 3d engine won't be allowed to scale this
-		// useful for eg. a fixed scene where you want an object to
-		// be at the right depth but want to draw at a fixed size
 		private var _fixedSize:Boolean = false;
 		
 		public function Object3D()
 		{
-			_sprite2D = new Sprite();
-			_sprite2D.mouseChildren = false;
-			_sprite2D.mouseEnabled = false;
+			_container = new Sprite();
+			_container.mouseChildren = false;
+			_container.mouseEnabled = false;
 		}
 			
 		public function destroy():void
 		{
-			_sprite2D.removeChild(_graphic);
+			_container.removeChild(_graphic);
 		}
 		
 		public function set mouseEnabled(b:Boolean):void
 		{
-			_sprite2D.mouseEnabled = _sprite2D.mouseChildren = b;
+			_container.mouseEnabled = _container.mouseChildren = b;
 		}
 			
 		public function setParams(params:Object):void
@@ -56,27 +48,27 @@
 			if (params['angleZ'])angleZ = params['angleZ'];
 			if (params['scale'])angleZ = params['scale'];
 		}
-
 		
 		public function render(camera:Camera3D):void
 		{
-			
 		}
 		
 		//////////// getters, setters
 	
 			
-		internal function get sprite2D():Sprite { return _sprite2D; }
+		internal function get container():Sprite { return _container; }
+		
 		public function get graphic():DisplayObject { return _graphic; }
+		
 		public function set graphic(g:*):void 
 		{
 			_graphic = g as DisplayObject;
-			_sprite2D.addChild(_graphic);
+			_container.addChild(_graphic);
 		}
 		
 		public function removeGraphic():DisplayObject
 		{
-			return _sprite2D.removeChild(_graphic);
+			return _container.removeChild(_graphic);
 		}
 		
 		public function set scale(s:Number):void
@@ -86,24 +78,10 @@
 		
 		public function get scale():Number { return _scale; }
 						
-		public function get depth():Number { return _depth; }
-		
-		public function set depth(value:Number):void 
-		{
-			_depth = value;
-		}
-		
 		public function get name():String { return _name; }
 		public function set name(value:String):void 
 		{
 			_name = value;
-		}
-		
-		public function get userData():Object { return _userData; }
-		
-		public function set userData(value:Object):void 
-		{
-			_userData = value;
 		}
 		
 		public function get angleX():Number { return _angleX; }
@@ -148,7 +126,6 @@
 			_z = value;
 		}
 		
-		
 		public function set position(p:Point3D): void
 		{
 			_x = p.x;
@@ -168,20 +145,6 @@
 			_fixedSize = value;
 		}
 		
-		
-		public function clone():Object3D	// clones physical props
-		{
-			var r:Object3D = new Object3D();
-			r.x = _x;
-			r.y = _y;
-			r.z = _z;
-			r.angleX = _angleX;
-			r.angleY = _angleY;
-			r.angleZ = _angleZ;
-			return r;
-		}
-		
-				
 		public function toString():String
 		{
 			var s:String = '[Object3D at ' + int(x) + ',' + int(y) + ',' + int(z) ;
@@ -192,8 +155,6 @@
 			return s;
 			
 		}
-		
-		
 		
 	}
 }
