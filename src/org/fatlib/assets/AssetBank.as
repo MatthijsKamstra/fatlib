@@ -93,10 +93,18 @@
 			return getContent(id) as MovieClip;
 		}
 		
+		public function instantiateSymbol(id:String, linkage:String):*
+		{
+			return ClassUtils.instantiateSymbol(getMovieClip(id), linkage);
+		}
+		
 		public function instantiateMovieClip(id:String, linkage:String):MovieClip
 		{
-			return ClassUtils.instantiateSymbol(getMovieClip(id), linkage) as MovieClip;
+			return instantiateClip(id, linkage) as MovieClip;
 		}
+		
+			
+	
 		
 		public function destroy():void
 		{
