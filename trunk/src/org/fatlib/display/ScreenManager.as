@@ -43,11 +43,13 @@
 		 * 
 		 * @param	name	The name of the screen to show
 		 */
-		public function changeScreen(name:String):void
+		public function changeScreen(name:String, launchVars:Object=null):void
 		{
 			destroyScreen();
 			Log.log('[ScreenManager] showing screen ' + name);
+			if (launchVars == null) launchVars = { };
 			_currentScreen = createScreen(name);
+			_currentScreen.launchVars = launchVars;
 			addChild(_currentScreen);
 			_currentScreen.handleAddedToStage();
 		}
@@ -78,6 +80,7 @@
 			} else {
 				scr = createPlaceholderScreen(name);
 			}
+			scr.screenName = name;
 			return scr;
 		}
 		
@@ -85,7 +88,7 @@
 		{
 			var scr:Screen = new Screen();
 			var t:String = 'Placeholder for screen ' + name;
-			scr.addChild(DisplayUtils.createTextField(t, 20));
+			scr.addChild(new Text(t));
 			return scr;
 		}
 
