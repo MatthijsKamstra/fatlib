@@ -19,13 +19,14 @@
 		
 		// A delay object
 		protected var _delay:Delay;
+		protected var _screenName:String;
+		protected var _launchVars:Object = { };
 		
 		public function Screen() 
 		{
 			addEventListener(Event.ENTER_FRAME, onFrame, false, 0, true);
 			_delay = new Delay();
 		}
-		
 		
 		/**
 		 * Called by ScreenManager when the screen is added to the stage
@@ -39,7 +40,24 @@
 		 */
 		public function handleRemovedFromStage():void
 		{
+		
 		}
+		
+		
+		public function get screenName():String { return _screenName; }
+		
+		public function set screenName(value:String):void 
+		{
+			_screenName = value;
+		}
+		
+			
+		public function set launchVars(value:Object):void 
+		{
+			_launchVars = value;
+		}
+	
+
 		
 		/**
 		 *	Called when the screen is no longer needed
@@ -49,6 +67,7 @@
 			removeEventListener(Event.ENTER_FRAME, onFrame);
 			_delay.destroy();
 		}
+
 		
 		///////
 		
@@ -67,7 +86,7 @@
 		{
 			handleFrame();
 		}
-	
+		
 		
 	}
 	
