@@ -10,8 +10,8 @@
 	import flash.events.EventDispatcher;
 	import flash.media.Sound;
 	import flash.text.TextField;
-	import org.fatlib.assets.LoadProgressEvent;
 	import org.fatlib.assets.LoadStatus;
+	import org.fatlib.events.LoadProgressEvent;
 	import org.fatlib.Log;
 	
 	import org.fatlib.utils.TextLookup;
@@ -28,9 +28,11 @@
 	 */
 	public class LayoutManager extends EventDispatcher 
 	{
-		public static const LOADED:String = 'onLoaded';
-		public static const LOAD_PROGRESS:String = 'onLoadProgress';
 
+		[Event(name="onLoaded", 	type="org.fatlib.events.LoadProgressEvent")]
+		[Event(name="onError",	 	type="org.fatlib.events.LoadProgressEvent")]
+		[Event(name="onProgress", 	type="org.fatlib.events.LoadProgressEvent")]
+		
 		/**
 		 * An object to load & keep references to the loaded assets
 		 */
@@ -87,8 +89,8 @@
 			{
 				_assets.add(_assetsRoot + src, src);
 			}
-			_assets.addEventListener(AssetBank.ALL_ASSETS_LOADED, onLoaded, false, 0, true);
-			_assets.addEventListener(AssetBank.LOAD_PROGRESS, onLoadProgress, false, 0, true);
+			_assets.addEventListener(LoadProgressEvent.LOADED, onLoaded, false, 0, true);
+			_assets.addEventListener(LoadProgressEvent.PROGRESS, onLoadProgress, false, 0, true);
 			Log.log("[LayoutManager] loading " + assetList.length + " items");
 			_assets.startLoading();
 		}
@@ -146,18 +148,17 @@
 			_textLookup = value;
 		}
 				
-	
 		//////////////
 		
 		private function onLoadProgress(e:LoadProgressEvent):void 
 		{
-			dispatchEvent(new LoadProgressEvent(LOAD_PROGRESS, e.fractionLoaded));
+			dispatchEvent(new LoadProgressEvent(LoadProgressEvent.PROGRESS, e.fractionLoaded));
 		}
 		
-		private function onLoaded(e:Event):void
+		private function onLoaded(e:LoadProgressEvent):void
 		{
 			Log.log("[LayoutManager] loaded");
-			dispatchEvent(new Event(LOADED));
+			dispatchEvent(new LoadProgressEvent(LoadProgressEvent.LOADED));
 		}
 		
 		private function generateAssetList(xml:XML, list:Array = null):Array

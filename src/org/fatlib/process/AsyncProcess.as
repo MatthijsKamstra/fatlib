@@ -12,6 +12,7 @@
 	 */
 	public class AsyncProcess extends EventDispatcher implements IProcess, IDestroyable
 	{
+		[Event(name="complete", type="flash.events.Event")]
 		
 		public static const READY:String = 'READY';
 		public static const EXECUTING:String = 'EXECUTING';

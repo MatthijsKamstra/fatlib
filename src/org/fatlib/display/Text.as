@@ -15,6 +15,8 @@
 	 */
 	public class Text extends Graphic
 	{
+		[Event(name="change", 	type="flash.events.Event")]
+		
 		/**
 		 * A Flash TextField 
 		 */
