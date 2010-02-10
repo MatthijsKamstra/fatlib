@@ -69,6 +69,8 @@ import org.fatlib.utils.DisplayUtils
 
 internal class WipeInstance extends EventDispatcher
 {
+	[Event(name="complete", type="flash.events.Event")]
+	
 	private var _target:DisplayObject;
 	private var _mask:Sprite;
 	private var _onCompletecallback:Callback;	

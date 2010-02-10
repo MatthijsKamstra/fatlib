@@ -65,6 +65,18 @@
 			}
 		}
 
+		/**
+		 * 
+		 * 
+		 * @param	methodToCall
+		 * @param	params
+		 */
+		public static function executeNow(methodToCall:Function = null, params:Array = null):void
+		{
+			if (methodToCall!=null)
+				new Callback(methodToCall, params).execute();
+		}
+
 	}
 	
 }

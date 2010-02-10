@@ -2,17 +2,19 @@
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import org.fatlib.events.LoadProgressEvent;
 	import org.fatlib.interfaces.IDestroyable;
 	import org.fatlib.Log;
 	
 	internal class ItemLoader extends EventDispatcher implements IDestroyable
 	{
+		
+		[Event(name="onLoaded", 	type="org.fatlib.events.LoadProgressEvent")]
+		[Event(name="onError",	 	type="org.fatlib.events.LoadProgressEvent")]
+		[Event(name="onProgress", 	type="org.fatlib.events.LoadProgressEvent")]
+		
 		private var _id:String;
 		private var _url:String;
-		
-		public static const LOADED:String = 'onLoaded';
-		public static const LOAD_PROGRESS:String = 'onLoadProgress';
-		public static const LOAD_ERROR:String = 'onLoadError';
 		
 		public function ItemLoader(id:String)
 		{
@@ -26,18 +28,18 @@
 		
 		protected function handleLoadProgress(fractionLoaded:Number):void
 		{
-			dispatchEvent(new LoadProgressEvent(LOAD_PROGRESS, fractionLoaded));
+			dispatchEvent(new LoadProgressEvent(LoadProgressEvent.PROGRESS, fractionLoaded));
 		}
 		
 		protected function handleLoaded():void
 		{
-			dispatchEvent(new Event(LOADED));
+			dispatchEvent(new LoadProgressEvent(LoadProgressEvent.LOADED));
 		}
 		
 		protected function handleError(text:String):void
 		{
 			Log.log("[ItemLoader] Error: " + text);
-			dispatchEvent(new Event(LOAD_ERROR));
+			dispatchEvent(new LoadProgressEvent(LoadProgressEvent.ERROR));
 		}
 		
 		public function getContent():*

@@ -8,6 +8,8 @@
 	import flash.events.EventDispatcher;
 	import flash.media.Sound;
 	import flash.utils.Dictionary;
+	import org.fatlib.display.Text;
+	import org.fatlib.events.LoadProgressEvent;
 	import org.fatlib.Log;
 	import org.fatlib.utils.ArrayUtils;
 	
@@ -17,10 +19,9 @@
 	
 	public class AssetBank extends EventDispatcher implements IDestroyable
 	{
-		public static const ALL_ASSETS_LOADED:String = 'onAllAssetsLoaded';
-		public static const LOAD_PROGRESS:String = 'onLoadProgress';
-		public static const ASSET_LOADED:String = 'onAssetLoaded';
-		public static const LOAD_ERROR:String = 'onLoadError';
+		[Event(name="onLoaded", 	type="org.fatlib.events.LoadProgressEvent")]
+		[Event(name="onError",	 	type="org.fatlib.events.LoadProgressEvent")]
+		[Event(name="onProgress", 	type="org.fatlib.events.LoadProgressEvent")]
 		
 		private var _assets:Dictionary;
 		private var _toLoad:Array;
@@ -81,9 +82,9 @@
 			{
 				x = new XML(getText(id))
 			} catch (r:Error) {
-				dispatchEvent(new ErrorEvent(LOAD_ERROR, false, false, 'Problem parsing XML with id ' + id+ ': '+r));
+				dispatchEvent(new LoadProgressEvent(LoadProgressEvent.ERROR));
 			}
-							
+			
 			return x;
 		}
 		
@@ -149,7 +150,7 @@
 		private function assetsAllLoaded():void
 		{
 			Log.log("[AssetBank] loading complete");
-			dispatchEvent(new Event(ALL_ASSETS_LOADED));
+			dispatchEvent(new LoadProgressEvent(LoadProgressEvent.LOADED));
 		}
 		
 		private function loadAsset(url:String, id:String):void
@@ -172,27 +173,27 @@
 					//throw new Error('Loader not implemented for file extension ' + type);
 			}
 			
-			_itemLoader.addEventListener(ItemLoader.LOADED, onAssetLoaded);
-			_itemLoader.addEventListener(ItemLoader.LOAD_PROGRESS, onAssetLoadProgress);
-			_itemLoader.addEventListener(ItemLoader.LOAD_ERROR, onAssetLoadError);
+			_itemLoader.addEventListener(LoadProgressEvent.LOADED, onAssetLoaded);
+			_itemLoader.addEventListener(LoadProgressEvent.PROGRESS, onAssetLoadProgress);
+			_itemLoader.addEventListener(LoadProgressEvent.ERROR, onAssetLoadError);
 			_itemLoader.load(url);
 		}
 		
-		private function onAssetLoadError(e:Event):void 
+		private function onAssetLoadError(e:LoadProgressEvent):void 
 		{
 			Log.warn("[AssetBank] load error " + _itemLoader.url );
 			_itemLoader.destroy();
 			
 			_failedURLs.push(_itemLoader.url);
 			
-			_itemLoader.removeEventListener(ItemLoader.LOADED, onAssetLoaded);
-			_itemLoader.removeEventListener(ItemLoader.LOAD_PROGRESS, onAssetLoadProgress);
-			_itemLoader.removeEventListener(ItemLoader.LOAD_ERROR, onAssetLoadError);
+			_itemLoader.removeEventListener(LoadProgressEvent.LOADED, onAssetLoaded);
+			_itemLoader.removeEventListener(LoadProgressEvent.PROGRESS, onAssetLoadProgress);
+			_itemLoader.removeEventListener(LoadProgressEvent.ERROR, onAssetLoadError);
 			_itemLoader = null;
 			loadNext();
 		}
 		
-		private function onAssetLoaded(e:Event):void 
+		private function onAssetLoaded(e:LoadProgressEvent):void 
 		{
 			var loader:ItemLoader = (e.target as ItemLoader);
 			Log.log("[AssetBank] loaded " +_itemLoader.id );
@@ -200,9 +201,9 @@
 			_assets[loader.id] = _itemLoader.getContent();
 			_loadedURLs.push(_itemLoader.url);
 			
-			_itemLoader.removeEventListener(ItemLoader.LOADED, onAssetLoaded);
-			_itemLoader.removeEventListener(ItemLoader.LOAD_PROGRESS, onAssetLoadProgress);
-			_itemLoader.removeEventListener(ItemLoader.LOAD_ERROR, onAssetLoadError);
+			_itemLoader.removeEventListener(LoadProgressEvent.LOADED, onAssetLoaded);
+			_itemLoader.removeEventListener(LoadProgressEvent.PROGRESS, onAssetLoadProgress);
+			_itemLoader.removeEventListener(LoadProgressEvent.ERROR, onAssetLoadError);
 			_itemLoader = null;
 			loadNext();
 		}
@@ -214,7 +215,7 @@
 			var loadedItems:Number = _loadedURLs.length + _failedURLs.length + e.fractionLoaded;
 			var fractionLoaded:Number = loadedItems / totalItems;
 			
-			dispatchEvent(new LoadProgressEvent(LOAD_PROGRESS, fractionLoaded));
+			dispatchEvent(new LoadProgressEvent(LoadProgressEvent.PROGRESS, fractionLoaded));
 		}
 		
 		

@@ -89,6 +89,8 @@ internal class TweenInstance extends EventDispatcher
 	private var _frameSource:MovieClip;
 	private var _startTime:int;
 	
+	[Event(name="complete", type="flash.events.Event")]
+	
 	public function TweenInstance(target:Object, milliseconds:Number, properties:Object, transition:String=null, onComplete:Function=null, onCompleteParams:Array=null) 
 	{
 		_target = target;
