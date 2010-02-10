@@ -10,6 +10,7 @@
 	import flash.events.EventDispatcher;
 	import flash.media.Sound;
 	import flash.text.TextField;
+	import org.fatlib.assets.LoadProgressEvent;
 	import org.fatlib.assets.LoadStatus;
 	import org.fatlib.Log;
 	
@@ -17,7 +18,6 @@
 	import org.fatlib.assets.AssetBank;
 	import org.fatlib.display.Button;
 	import org.fatlib.display.Graphic;
-	import org.fatlib.events.CustomEvent;
 	import org.fatlib.utils.ArrayUtils;
 	import org.fatlib.utils.DisplayUtils;
 	import org.fatlib.utils.NetUtils;
@@ -149,9 +149,9 @@
 	
 		//////////////
 		
-		private function onLoadProgress(e:CustomEvent):void 
+		private function onLoadProgress(e:LoadProgressEvent):void 
 		{
-			dispatchEvent(new CustomEvent(LOAD_PROGRESS, e.data));
+			dispatchEvent(new LoadProgressEvent(LOAD_PROGRESS, e.fractionLoaded));
 		}
 		
 		private function onLoaded(e:Event):void

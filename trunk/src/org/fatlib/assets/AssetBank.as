@@ -11,7 +11,6 @@
 	import org.fatlib.Log;
 	import org.fatlib.utils.ArrayUtils;
 	
-	import org.fatlib.events.CustomEvent;
 	import org.fatlib.interfaces.IDestroyable;
 	import org.fatlib.utils.ClassUtils;
 	import org.fatlib.utils.NetUtils;
@@ -209,14 +208,13 @@
 		}
 		
 		//TODO weight
-		private function onAssetLoadProgress(e:CustomEvent):void 
+		private function onAssetLoadProgress(e:LoadProgressEvent):void 
 		{
-			//var progress:Number = e.data as Number;
+			var totalItems:int = _failedURLs.length + _loadedURLs.length + _toLoad.length;
+			var loadedItems:Number = _loadedURLs.length + _failedURLs.length + e.fractionLoaded;
+			var fractionLoaded:Number = loadedItems / totalItems;
 			
-			var fraction:Number = (_loadedURLs.length + _failedURLs.length) / (_failedURLs.length + _loadedURLs.length + _toLoad.length);
-			var progress:Object = {fraction:fraction, percentage:fraction * 100};
-			
-			dispatchEvent(new CustomEvent(LOAD_PROGRESS, progress));
+			dispatchEvent(new LoadProgressEvent(LOAD_PROGRESS, fractionLoaded));
 		}
 		
 		

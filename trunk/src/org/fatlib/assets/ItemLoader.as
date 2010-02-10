@@ -5,8 +5,6 @@
 	import org.fatlib.interfaces.IDestroyable;
 	import org.fatlib.Log;
 	
-	import org.fatlib.events.CustomEvent;
-	
 	internal class ItemLoader extends EventDispatcher implements IDestroyable
 	{
 		private var _id:String;
@@ -26,9 +24,9 @@
 			_url = url;
 		}
 		
-		protected function handleLoadProgress(progress:Number):void
+		protected function handleLoadProgress(fractionLoaded:Number):void
 		{
-			dispatchEvent(new CustomEvent(LOAD_PROGRESS, {progress:progress}));
+			dispatchEvent(new LoadProgressEvent(LOAD_PROGRESS, fractionLoaded));
 		}
 		
 		protected function handleLoaded():void
