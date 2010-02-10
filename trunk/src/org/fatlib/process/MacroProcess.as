@@ -9,8 +9,8 @@
 	 */
 	public class MacroProcess extends AsyncProcess
 	{
-		private var _processes:Array;
-		private var _currentProcess:IProcess;
+		protected var _processes:Array;
+		protected var _currentProcess:IProcess;
 		
 		/**
 		 * Start as soon as the first subprocess is added?
@@ -35,7 +35,7 @@
 		/**
 		 * Starts the first subprocess
 		 */
-		final override public function execute():void
+		override public function execute():void
 		{
 			startNextProcess();
 		}
