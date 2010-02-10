@@ -100,7 +100,7 @@
 		
 		public function instantiateMovieClip(id:String, linkage:String):MovieClip
 		{
-			return instantiateClip(id, linkage) as MovieClip;
+			return instantiateSymbol(id, linkage) as MovieClip;
 		}
 		
 			
