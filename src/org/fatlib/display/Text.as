@@ -8,7 +8,6 @@
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
-	import org.fatlib.events.CustomEvent;
 	import org.fatlib.utils.DisplayUtils;
 	
 	/**
@@ -16,9 +15,6 @@
 	 */
 	public class Text extends Graphic
 	{
-		
-		public static const TEXT_INPUT:String = 'onTextInput';
-		
 		/**
 		 * A Flash TextField 
 		 */
@@ -222,8 +218,7 @@
 				
 		private function onTextInput(e:TextEvent):void 
 		{
-			dispatchEvent(new CustomEvent(TEXT_INPUT, e.text));
-		
+			dispatchEvent(new Event(Event.CHANGE));
 		}
 
 		
