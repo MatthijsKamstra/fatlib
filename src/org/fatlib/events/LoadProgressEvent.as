@@ -1,4 +1,4 @@
-﻿package org.fatlib.assets 
+﻿package org.fatlib.events 
 {
 	import flash.events.Event;
 	
@@ -26,7 +26,7 @@
 		
 		public override function toString():String 
 		{ 
-			return formatToString("LoadProgressEvent", "fractionLoaded", "type", "bubbles", "cancelable", "eventPhase"); 
+			return formatToString("LoadProgressEvent", "type", "fractionLoaded", "bubbles", "cancelable", "eventPhase"); 
 		}
 		
 		public function get percentLoaded():Number { return _percentLoaded; }
