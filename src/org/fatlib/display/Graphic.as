@@ -216,23 +216,6 @@
 		
 		// UI 
 		
-		public function get interactable():Boolean { return _interactable; }
-		
-		public function set interactable(value:Boolean):void 
-		{
-			_interactable = value;
-			interactive = _interactive;
-		}
-		
-		public function get childrenInteractable():Boolean { return _childrenInteractable; }
-		
-		public function set childrenInteractable(value:Boolean):void 
-		{
-			_childrenInteractable = value;
-			interactive = _interactive;
-		}
-		
-		
 		/**
 		 * Sets whether the object acts as button or not
 		 * If set to true, the object will be set to interactable, its children will be set to non-interactable,
@@ -291,7 +274,19 @@
 		protected function handleMadeNonInteractive():void
 		{
 		}
-
+		
+		protected function set interactable(value:Boolean):void 
+		{
+			_interactable = value;
+			interactive = _interactive;
+		}
+		
+		protected function set childrenInteractable(value:Boolean):void 
+		{
+			_childrenInteractable = value;
+			interactive = _interactive;
+		}
+		
 		
 		///////////// PRIVATE METHODS
 		
