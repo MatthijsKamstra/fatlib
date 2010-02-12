@@ -14,13 +14,21 @@
 	 * The Graphic class is subclass of Sprite that provides the following functionality:
 	 * 
 	 * 1. States
+	 * 
 	 * Rather than use frames of a MovieClip, graphical states can be registered with the Graphic. 
 	 * For instance, the 'up' and 'over' states of a button or the 'unhilited' and 'hilited' states of a tab.
 	 * This makes Graphic a useful alternative to MovieClip when multistate graphics are needed, without
 	 * using the Flash IDE to prepare timelines
 	 *
 	 * 2. Interactivity
-	 * The Graphic class provides shortcuts with regards to mouse- and tab- enabledness
+	 * 
+	 * The Graphic class provides shortcuts with regards to mouse- and tab- enabledness. 
+	 *	eg. 
+	 * 		graphic.interactive=true;
+	 * rather than
+ 	 *  	graphic.mouseEnabled=graphic.tabEnabled=true;
+	 * 
+	 * 
 	 * 
 	 */
 	public class Graphic extends Sprite implements IDestroyable
@@ -66,7 +74,7 @@
 		private var _interactive:Boolean;
 		
 		/**
-		 * An object for user data - can be used in any way like the dynamic property of a MovieClip
+		 * An object for user data - can be used in any way like the dynamic nature of a MovieClip
 		 */
 		private var _userData:Object = {};
 		
@@ -89,11 +97,9 @@
 			
 			_interactable = false;
 			_childrenInteractable = true;
-			
 			interactive = true;
 			
 			addEventListener(Event.ENTER_FRAME, onFrame, false, 0, true);
-			
 		}
 		
 		/////////////// PUBLIC METHODS
@@ -198,13 +204,6 @@
 			return count;
 		}
 			
-		/**
-		 * Called every frame
-		 */
-		protected function handleFrame():void
-		{
-		}
-		
 		
 		/**
 		 *	Called when the object is no longer needed
@@ -260,6 +259,13 @@
 		
 		
 		/////////////// PROTECTED METHODS 
+		
+		/**
+		 * Called every frame
+		 */
+		protected function handleFrame():void
+		{
+		}
 		
 		/**
 		 * Called when the interactive property is set to true
