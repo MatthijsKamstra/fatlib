@@ -1,7 +1,8 @@
-﻿package org.fatlib.display
+﻿package org.fatlib.app
 {
 	import flash.display.Sprite;
 	import flash.text.TextField;
+	import org.fatlib.display.Text;
 	import org.fatlib.Log;
 	import org.fatlib.utils.DisplayUtils;
 	

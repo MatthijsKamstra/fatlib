@@ -1,4 +1,4 @@
-﻿package org.fatlib.utils
+﻿package org.fatlib.app
 {
 	/**
 	 * Given an XLIFF XML file, looks up text entried keyed by resname
