@@ -1,4 +1,4 @@
-﻿package org.fatlib.utils
+﻿package org.fatlib.app
 {
 	import org.fatlib.Log;
 	

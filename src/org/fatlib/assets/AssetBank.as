@@ -60,9 +60,19 @@
 			return _assets[id];
 		}
 		
+		public function getBitmap(id:String):Bitmap
+		{
+			var b:Bitmap = getContent(id) as Bitmap;
+			// clone the bitmap, otherwise we return a reference to the (unique) original
+			if (b) return new Bitmap(b.bitmapData);
+			return null;
+		}
+		
 		public function getBitmapData(id:String):BitmapData
 		{
-			return (getContent(id) as Bitmap).bitmapData;
+			var b:Bitmap = getBitmap(id);
+			if (b) return b.bitmapData;
+			return null;
 		}
 				
 		public function getText(id:String):String

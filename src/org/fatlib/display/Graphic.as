@@ -14,21 +14,13 @@
 	 * The Graphic class is subclass of Sprite that provides the following functionality:
 	 * 
 	 * 1. States
-	 * 
 	 * Rather than use frames of a MovieClip, graphical states can be registered with the Graphic. 
 	 * For instance, the 'up' and 'over' states of a button or the 'unhilited' and 'hilited' states of a tab.
 	 * This makes Graphic a useful alternative to MovieClip when multistate graphics are needed, without
 	 * using the Flash IDE to prepare timelines
 	 *
 	 * 2. Interactivity
-	 * 
-	 * The Graphic class provides shortcuts with regards to mouse- and tab- enabledness. 
-	 *	eg. 
-	 * 		graphic.interactive=true;
-	 * rather than
- 	 *  	graphic.mouseEnabled=graphic.tabEnabled=true;
-	 * 
-	 * 
+	 * The Graphic class provides shortcuts with regards to mouse- and tab- enabledness
 	 * 
 	 */
 	public class Graphic extends Sprite implements IDestroyable
@@ -74,7 +66,7 @@
 		private var _interactive:Boolean;
 		
 		/**
-		 * An object for user data - can be used in any way like the dynamic nature of a MovieClip
+		 * An object for user data - can be used in any way like the dynamic property of a MovieClip
 		 */
 		private var _userData:Object = {};
 		
@@ -97,9 +89,11 @@
 			
 			_interactable = false;
 			_childrenInteractable = true;
+			
 			interactive = true;
 			
 			addEventListener(Event.ENTER_FRAME, onFrame, false, 0, true);
+			
 		}
 		
 		/////////////// PUBLIC METHODS
@@ -204,6 +198,13 @@
 			return count;
 		}
 			
+		/**
+		 * Called every frame
+		 */
+		protected function handleFrame():void
+		{
+		}
+		
 		
 		/**
 		 *	Called when the object is no longer needed
@@ -214,6 +215,23 @@
 		}		
 		
 		// UI 
+		
+		public function get interactable():Boolean { return _interactable; }
+		
+		public function set interactable(value:Boolean):void 
+		{
+			_interactable = value;
+			interactive = _interactive;
+		}
+		
+		public function get childrenInteractable():Boolean { return _childrenInteractable; }
+		
+		public function set childrenInteractable(value:Boolean):void 
+		{
+			_childrenInteractable = value;
+			interactive = _interactive;
+		}
+		
 		
 		/**
 		 * Sets whether the object acts as button or not
@@ -261,13 +279,6 @@
 		/////////////// PROTECTED METHODS 
 		
 		/**
-		 * Called every frame
-		 */
-		protected function handleFrame():void
-		{
-		}
-		
-		/**
 		 * Called when the interactive property is set to true
 		 */
 		protected function handleMadeInteractive():void
@@ -280,19 +291,7 @@
 		protected function handleMadeNonInteractive():void
 		{
 		}
-		
-		protected function set interactable(value:Boolean):void 
-		{
-			_interactable = value;
-			interactive = _interactive;
-		}
-		
-		protected function set childrenInteractable(value:Boolean):void 
-		{
-			_childrenInteractable = value;
-			interactive = _interactive;
-		}
-		
+
 		
 		///////////// PRIVATE METHODS
 		

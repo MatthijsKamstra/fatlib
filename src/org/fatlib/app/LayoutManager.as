@@ -1,4 +1,4 @@
-﻿package org.fatlib.display 
+﻿package org.fatlib.app 
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -173,7 +173,8 @@
 			}
 			
 			for each(var node:XML in xml.children())
-				list = generateAssetList(node, list);
+				if (xml.nodeType!='data')
+					list = generateAssetList(node, list);
 				
 			return list;
 		}
@@ -210,6 +211,9 @@
 				case 'sound':
 					element = createSound(node);
 					break;
+				case 'data':
+					element = node;
+					break;
 				default:
 					Log.warn("[LayoutManager] unsupported node: " +nodeName );
 					break
@@ -237,7 +241,6 @@
 		}
 		
 		
-		
 		protected function findNode(xml:XML, id:String):XML
 		{
 			var retNode:XML;
@@ -254,7 +257,6 @@
 			return retNode;
 		}
 		
-		////////
 		///////
 		
 		private function createContainer(node:XML):Graphic
@@ -342,7 +344,7 @@
 			
 			if (node.@w.length() == 0)
 			{
-				Log.log("[Layout] Block width must be specified");
+				Log.log("[LayoutManager] Block width must be specified");
 				w = 0;
 			} else {
 				w = parseFloat(node.@w);
@@ -435,8 +437,8 @@
 			{
 				case 'jpg':
 				case 'png':
-					var b:BitmapData = _assets.getBitmapData(src);
-					output = new Bitmap(b);
+					output = _assets.getBitmap(src);
+					if (output == null) output = new Text('missing graphic: ' + src);
 					break;
 				case 'swf':
 					output= _assets.getMovieClip(src);
