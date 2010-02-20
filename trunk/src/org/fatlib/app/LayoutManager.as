@@ -33,31 +33,7 @@
 		[Event(name="onLoaded", 	type="org.fatlib.events.LoadProgressEvent")]
 		[Event(name="onError",	 	type="org.fatlib.events.LoadProgressEvent")]
 		[Event(name="onProgress", 	type="org.fatlib.events.LoadProgressEvent")]
-		
-		/**
-		 * An object to load & keep references to the loaded assets
-		 */
-		private var _assets:AssetBank;
-		
-		/**
-		 * An XML object aggregating all the layout XMLs added to the object
-		 */
-		private var _aggregatedXML:XML;
-		
-		/**
-		 * Root path from which to load assets
-		 */
-		private var _assetsRoot:String;
-	
-		/**
-		 * Looks up text from resnames in an XLIFF file
-		 */
-		private var _textLookup:TextLookup;
 
-		
-		/**
-		 * Creates a new instance of the object
-		 */
 		public function LayoutManager() 
 		{
 			Log.log("[LayoutManager] init");
@@ -65,6 +41,20 @@
 		}
 		
 		///////////// PUBLIC METHODS
+		
+		public function get assetsRoot():String { return _assetsRoot; }
+		
+		public function set assetsRoot(value:String):void 
+		{
+			if (value.charAt(value.length) != '/') value += '/';
+			_assetsRoot = value;
+		}
+		
+		public function set textLookup(value:TextLookup):void 
+		{
+			_textLookup = value;
+		}
+		
 		
 		/**
 		 * Adds a layout XML document
@@ -135,60 +125,12 @@
 			return createElement(node);
 		}
 	
-		public function get assetsRoot():String { return _assetsRoot; }
-		
-		public function set assetsRoot(value:String):void 
-		{
-			if (value.charAt(value.length) != '/') value += '/';
-			_assetsRoot = value;
-		}
-		
-		
-		public function set textLookup(value:TextLookup):void 
-		{
-			_textLookup = value;
-		}
-				
-		//////////////
-		
-		private function onLoadProgress(e:LoadProgressEvent):void 
-		{
-			dispatchEvent(new LoadProgressEvent(LoadProgressEvent.PROGRESS, e.fractionLoaded));
-		}
-		
-		private function onLoaded(e:LoadProgressEvent):void
-		{
-			Log.log("[LayoutManager] loaded");
-			dispatchEvent(new LoadProgressEvent(LoadProgressEvent.LOADED));
-		}
-		
-		private function generateAssetList(xml:XML, list:Array = null):Array
-		{
-			if (!list) list = [];
-
-			if (xml.@src.length() > 0)
-			{
-				var src:String = xml.@src;
-				if (!ArrayUtils.contains(list, src))
-					list = list.concat(src);		
-			}
-			
-			for each(var node:XML in xml.children())
-				if (xml.nodeType!='data')
-					list = generateAssetList(node, list);
-				
-			return list;
-		}
-		
 		/////////////////////
 		
 		protected function createElement(node:XML):*
 		{
-		
 			var nodeName:String = node.name();
 			var element:*;
-
-			
 			switch(nodeName)
 			{
 				case 'image':
@@ -222,7 +164,6 @@
 			
 			if (element is Graphic)
 			{
-				
 				if (node.@x.length() > 0)
 					element.x  = parseFloat(node.@x);
 					
@@ -237,10 +178,8 @@
 					
 				element.visible = (node.@visible != 'false');
 			}
-			
 			return element;
 		}
-		
 		
 		protected function findNode(xml:XML, id:String):XML
 		{
@@ -258,20 +197,6 @@
 			return retNode;
 		}
 		
-		///////
-		
-		private function createContainer(node:XML):Graphic
-		{
-			var container:Graphic = new Graphic();
-			for each(var subnode:XML in node.children())
-			{
-				var element:*= createElement(subnode);
-				if (element is DisplayObject) container.addChild(element);
-			}
-			return container;
-		}
-		
-				
 		protected function createImage(node:XML, isButton:Boolean=false):Graphic
 		{
 			var src:String = node.@src;
@@ -450,6 +375,73 @@
 			}
 			return output;
 		}
+		
+		//////////////////////////////////////
+		
+		/**
+		* An object to load & keep references to the loaded assets
+		 */
+		private var _assets:AssetBank;
+		
+		/**
+		 * An XML object aggregating all the layout XMLs added to the object
+		 */
+		private var _aggregatedXML:XML;
+		
+		/**
+		 * Root path from which to load assets
+		 */
+		private var _assetsRoot:String;
+	
+		/**
+		 * Looks up text from resnames in an XLIFF file
+		 */
+		private var _textLookup:TextLookup;
+
+		
+		private function onLoadProgress(e:LoadProgressEvent):void 
+		{
+			dispatchEvent(new LoadProgressEvent(LoadProgressEvent.PROGRESS, e.fractionLoaded));
+		}
+		
+		private function onLoaded(e:LoadProgressEvent):void
+		{
+			Log.log("[LayoutManager] loaded");
+			dispatchEvent(new LoadProgressEvent(LoadProgressEvent.LOADED));
+		}
+		
+		private function generateAssetList(xml:XML, list:Array = null):Array
+		{
+			if (!list) list = [];
+
+			if (xml.@src.length() > 0)
+			{
+				var src:String = xml.@src;
+				if (!ArrayUtils.contains(list, src))
+					list = list.concat(src);		
+			}
+			
+			for each(var node:XML in xml.children())
+				if (xml.nodeType!='data')
+					list = generateAssetList(node, list);
+				
+			return list;
+		}
+		
+		private function createContainer(node:XML):Graphic
+		{
+			var container:Graphic = new Graphic();
+			for each(var subnode:XML in node.children())
+			{
+				var element:*= createElement(subnode);
+				if (element is DisplayObject) container.addChild(element);
+			}
+			return container;
+		}
+		
+				
+
+		
 		
 		
 

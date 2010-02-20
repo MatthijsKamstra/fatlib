@@ -10,11 +10,11 @@
 	 * 		<property name="song_url" value="song.mp3" />
 	 * 
 	 *		<list name="fruit">
-	 * 			<property value="apple" />
-	 * 			<property value="banana" />
-	 * 			<property value="cherry" />
-	 * 		</config>
-	 * </hash>
+	 * 			<item value="apple" />
+	 * 			<item value="banana" />
+	 * 			<item value="cherry" />
+	 * 		</list>
+	 * </config>
 	 * 
 	 * @usage
 	 * 
@@ -33,8 +33,7 @@
 		
 		private var _props:Object;
 		private var _lists:Object;
-		
-		//	private var _hashes:Object;
+		private var _hashes:Object;
 		
 		/**
 		 * Creates a new instance
@@ -53,7 +52,7 @@
 			Log.log("[Config] init");
 			
 			_props = { };
-		//	_hashes = { };
+			_hashes = { };
 			_lists = { };
 			
 			for each(var node:XML in configXML.property)
@@ -62,13 +61,12 @@
 				var value:String = node.@value;
 				_props[name] = value;
 			}
-			/*
+			
 			for each(node in configXML.hash)
 			{
 				name = node.@name;
 				_hashes[name] = node;
 			}
-			*/
 			
 			for each(node in configXML.list)
 			{
@@ -142,13 +140,10 @@
 		}
 		
 		
-		/*
-		
-		public function getConfig(name:String):Config
+		public function getConfigFromHash(name:String):Config
 		{
 			return new Config(_hashes[name]);
 		}
-	*/
 		
 	}
 	
