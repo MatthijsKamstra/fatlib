@@ -52,6 +52,12 @@
 			var b:int = ( color ) & 255;
 			return { 'r':r, 'g':g, 'b':b };
 		}
+		
+		public static function rgbToHex(rgb:Object):int
+		{
+			return rgb.b + (rgb.g * 256) + (rgb.r * 256 * 256);
+		}
+		
 	}
 	
 }
