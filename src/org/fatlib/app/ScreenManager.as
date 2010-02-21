@@ -4,8 +4,9 @@
 	import flash.display.Sprite;
 	import flash.text.TextField;
 	import org.fatlib.display.Text;
-	import org.fatlib.interfaces.ICanvas;
+	import org.fatlib.interfaces.IDisplayable;
 	import org.fatlib.interfaces.IDestroyable;
+	import org.fatlib.interfaces.IDisplayable;
 	import org.fatlib.Log;
 	import org.fatlib.utils.DisplayUtils;
 	
@@ -14,11 +15,11 @@
 	 * Clients first register screens to be used. Then they can change which screen is shown.
 	 * The ScreenManager is responsible for creating, destroying and rendering the screens.
 	 */
-	public class ScreenManager implements ICanvas, IDestroyable
+	public class ScreenManager implements IDisplayable, IDestroyable
 	{
 		private var _currentScreen:Screen;
 		private var _classReferences:Object;		// screen classes, keyed by name
-		private var _canvas:DisplayObjectContainer;
+		private var _display:DisplayObjectContainer;
 		
 		//private var _history:Array;
 		
@@ -28,7 +29,7 @@
 		public function ScreenManager():void
 		{
 			Log.log("[ScreenManager] init");
-			_canvas = new Sprite();
+			_display = new Sprite();
 			_classReferences = { }
 		//	_history = [];
 		}
@@ -36,9 +37,9 @@
 		///////////// PUBLIC
 		
 		
-		public function get canvas():DisplayObjectContainer
+		public function get display():DisplayObjectContainer
 		{
-			return _canvas;
+			return _display;
 		}
 		
 		public function destroy():void
@@ -72,7 +73,7 @@
 		//	_history.push([name, launchVars, transition]);
 			_currentScreen = createScreen(name);
 			_currentScreen.launchVars = launchVars;
-			_canvas.addChild(_currentScreen.canvas);
+			_display.addChild(_currentScreen.display);
 			_currentScreen.handleAdded();
 		}
 		
@@ -93,7 +94,7 @@
 		private function destroyScreen():void
 		{
 			if (!_currentScreen) return;
-			_canvas.removeChild(_currentScreen.canvas);
+			_display.removeChild(_currentScreen.display);
 			_currentScreen.destroy();
 		}
 		
@@ -118,7 +119,7 @@
 		{
 			var scr:Screen = new Screen();
 			var t:String = 'Placeholder for screen ' + name;
-			scr.canvas.addChild(new Text(t));
+			scr.display.addChild(new Text(t));
 			return scr;
 		}
 
