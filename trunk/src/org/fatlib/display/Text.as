@@ -8,6 +8,8 @@
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
+	import org.fatlib.events.TextInputEvent;
+	import org.fatlib.utils.Delay;
 	import org.fatlib.utils.DisplayUtils;
 	
 	/**
@@ -15,7 +17,7 @@
 	 */
 	public class Text extends Graphic
 	{
-		[Event(name="change", 	type="flash.events.Event")]
+		[Event(name="onTextInput", 	type="org.fatlib.events.TextInputEvent")]
 		
 		/**
 		 * A Flash TextField 
@@ -61,6 +63,8 @@
 		 */
 		private var _beingEdited:Boolean = false;
 		
+		private var _delay:Delay;
+		
 		
 		
 		
@@ -76,6 +80,7 @@
 		 */
 		public function Text(text:String, font:String = null, size:int = 0, isHTML:Boolean = false, color:int = 0x000000, w:Number = 0, h:Number = 0)
 		{
+			_delay = new Delay();
 			_textField = new TextField();
 		
 			if (size == 0) size = 16;
@@ -204,6 +209,12 @@
 			_hiliteAlpha = alpha;
 		}
 		
+		override public function destroy():void 
+		{
+			_delay.destroy();
+		}
+		
+		
 		override protected function handleMadeInteractive():void 
 		{
 			super.handleMadeInteractive();
@@ -220,9 +231,13 @@
 				
 		private function onTextInput(e:TextEvent):void 
 		{
-			dispatchEvent(new Event(Event.CHANGE));
+			_delay.create(100, dispatchTextInputEvent);
 		}
-
+		
+		private function dispatchTextInputEvent():void 
+		{
+			dispatchEvent(new TextInputEvent(TextInputEvent.TEXT_INPUT, _textField.text));
+		}
 		
 		private function onFocusIn(e:Event):void 
 		{
