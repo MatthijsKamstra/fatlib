@@ -30,7 +30,6 @@
 		}
 		
 		public function get screens():ScreenManager { return _screens; }
-		
 	}
 
 }
