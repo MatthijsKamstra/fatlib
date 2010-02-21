@@ -20,6 +20,8 @@
 		private var _classReferences:Object;		// screen classes, keyed by name
 		private var _canvas:DisplayObjectContainer;
 		
+		//private var _history:Array;
+		
 		/**
 		 * Creates a new instance
 		 */
@@ -28,9 +30,22 @@
 			Log.log("[ScreenManager] init");
 			_canvas = new Sprite();
 			_classReferences = { }
+		//	_history = [];
 		}
 		
 		///////////// PUBLIC
+		
+		
+		public function get canvas():DisplayObjectContainer
+		{
+			return _canvas;
+		}
+		
+		public function destroy():void
+		{
+			destroyScreen();
+			_classReferences = null;
+		}
 		
 		/**
 		 * Register a screen class to be instatiated for a given name
@@ -38,7 +53,7 @@
 		 * @param	name		The name of the screen
 		 * @param	screenClass	A subclass of Screen from which instances of this screen should be instatiated
 		 */
-		public function registerScreen(name:String, screenClass:Class):void
+		public function register(name:String, screenClass:Class):void
 		{
 			Log.log('[ScreenManager] registering screen ' + name + ' -> ' + screenClass);
 			_classReferences[name] = screenClass;
@@ -49,16 +64,29 @@
 		 * 
 		 * @param	name	The name of the screen to show
 		 */
-		public function changeScreen(name:String, launchVars:Object=null, transition:String=null):void
+		public function goto(name:String, launchVars:Object=null, transition:String=null):void
 		{
 			destroyScreen();
 			Log.log('[ScreenManager] showing screen ' + name);
 			if (launchVars == null) launchVars = { };
+		//	_history.push([name, launchVars, transition]);
 			_currentScreen = createScreen(name);
 			_currentScreen.launchVars = launchVars;
 			_canvas.addChild(_currentScreen.canvas);
 			_currentScreen.handleAdded();
 		}
+		
+		/*
+		public function back(transition:String = null):void
+		{
+			if (_history.length > 1)
+			{
+				_history.pop();
+				var node:Array = _history[_history.length - 1];
+				goto(node[0], node[1], node[2]);
+			}
+		}
+		*/
 		
 		////////////////// PRIVATE
 			
@@ -92,18 +120,6 @@
 			var t:String = 'Placeholder for screen ' + name;
 			scr.canvas.addChild(new Text(t));
 			return scr;
-		}
-		
-		/* INTERFACE org.fatlib.interfaces.ICanvas */
-		
-		public function get canvas():DisplayObjectContainer
-		{
-			return _canvas;
-		}
-		
-		public function destroy():void
-		{
-			//TODO
 		}
 
 	}
