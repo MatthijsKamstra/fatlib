@@ -9,6 +9,7 @@
 	import flash.geom.Rectangle;
 	import org.fatlib.interfaces.IDestroyable;
 	import org.fatlib.utils.ClassUtils;
+	import org.fatlib.utils.Delay;
 	
 	/**
 	 * The Graphic class is subclass of Sprite that provides the following functionality:
@@ -69,6 +70,9 @@
 		 * An object for user data - can be used in any way like the dynamic property of a MovieClip
 		 */
 		private var _userData:Object = {};
+		
+	
+		
 		
 		/**
 		 * Creates a new Graphic instance.
@@ -274,6 +278,7 @@
 		{
 			_userData = value;
 		}
+		
 		
 		
 		/////////////// PROTECTED METHODS 
