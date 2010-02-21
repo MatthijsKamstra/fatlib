@@ -15,8 +15,8 @@
 		
 		override public function handleAdded():void 
 		{
-			_canvas.addChild(new Text('Intro screen'));
-			_canvas.addChild(new WireframeButton('main')).y = 30;
+			_display.addChild(new Text('Intro screen'));
+			_display.addChild(new WireframeButton('main')).y = 30;
 		}
 		
 		override protected function handleClicked(targetName:String):void 
