@@ -2,9 +2,9 @@
 {
 	import flash.display.DisplayObjectContainer;
 	
-	public interface ICanvas 
+	public interface IDisplayable 
 	{
-		function get canvas():DisplayObjectContainer;
+		function get display():DisplayObjectContainer;
 	}
 	
 }

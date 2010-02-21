@@ -6,8 +6,8 @@
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import org.fatlib.display.Graphic;
-	import org.fatlib.interfaces.ICanvas;
 	import org.fatlib.interfaces.IDestroyable;
+	import org.fatlib.interfaces.IDisplayable;
 	import org.fatlib.Log;
 	import org.fatlib.utils.Delay;
 	import org.fatlib.utils.DisplayUtils;
@@ -19,21 +19,21 @@
 	 * 
 	 * Managed by an instance of the ScreenManager class
 	 */
-	public class Screen implements ICanvas, IDestroyable
+	public class Screen implements IDisplayable, IDestroyable
 	{
 		
 		// A delay object
 		protected var _screenName:String;
 		protected var _launchVars:Object = { };
-		protected var _canvas:DisplayObjectContainer;
+		protected var _display:DisplayObjectContainer;
 		protected var _delay:Delay;
 		private var _manager:ScreenManager;
 		
 		public function Screen() 
 		{
 			_delay = new Delay();
-			_canvas = new Sprite();
-			_canvas.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
+			_display = new Sprite();
+			_display.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
 		}
 		
 		
@@ -68,7 +68,7 @@
 			_launchVars = value;
 		}
 		
-		public function get canvas():DisplayObjectContainer { return _canvas; }
+		public function get display():DisplayObjectContainer { return _display; }
 		
 		final public function set manager(value:ScreenManager):void 
 		{
@@ -77,7 +77,7 @@
 		
 		public function destroy():void
 		{
-			DisplayUtils.recursiveStop(_canvas);
+			DisplayUtils.recursiveStop(_display);
 		}
 		
 		///////////
