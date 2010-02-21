@@ -1,10 +1,10 @@
 ﻿package org.fatlib.interfaces 
 {
-	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	
 	public interface ICanvas 
 	{
-		function get canvas():DisplayObject;
+		function get canvas():DisplayObjectContainer;
 	}
 	
 }

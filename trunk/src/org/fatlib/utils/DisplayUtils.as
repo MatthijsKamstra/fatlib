@@ -105,24 +105,6 @@ package org.fatlib.utils
 			return b;
 		}
 					
-		/**
-		 * Creates a wireframe button
-		 * 
-		 * @param	name	The name of the button
-		 * @return	A wireframe button with the given name
-		 */
-		public static function createWireframeButton(name:String):Button
-		{
-			var b:Button = new Button();
-			var up:Sprite = createRectangle(0, 0, 100, 20, 0xFFFFFF, true);
-			up.addChild(new Text(name));
-			var over:Sprite = createRectangle(0, 0, 100, 20, 0x000000);
-			over.addChild(new Text(name, null, 0, false, 0xFFFFFF));
-			b.registerState(Button.UP, up)
-			b.registerState(Button.OVER, over);
-			b.name = name;
-			return b;
-		}
 		
 		/**
 		 * Centres the object, based on its current width and height, to a target's centre

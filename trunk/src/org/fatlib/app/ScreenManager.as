@@ -1,8 +1,11 @@
 ﻿package org.fatlib.app
 {
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.text.TextField;
 	import org.fatlib.display.Text;
+	import org.fatlib.interfaces.ICanvas;
+	import org.fatlib.interfaces.IDestroyable;
 	import org.fatlib.Log;
 	import org.fatlib.utils.DisplayUtils;
 	
@@ -11,10 +14,11 @@
 	 * Clients first register screens to be used. Then they can change which screen is shown.
 	 * The ScreenManager is responsible for creating, destroying and rendering the screens.
 	 */
-	public class ScreenManager extends Sprite
+	public class ScreenManager implements ICanvas, IDestroyable
 	{
 		private var _currentScreen:Screen;
 		private var _classReferences:Object;		// screen classes, keyed by name
+		private var _canvas:DisplayObjectContainer;
 		
 		/**
 		 * Creates a new instance
@@ -22,6 +26,7 @@
 		public function ScreenManager():void
 		{
 			Log.log("[ScreenManager] init");
+			_canvas = new Sprite();
 			_classReferences = { }
 		}
 		
@@ -44,29 +49,24 @@
 		 * 
 		 * @param	name	The name of the screen to show
 		 */
-		public function changeScreen(name:String, launchVars:Object=null):void
+		public function changeScreen(name:String, launchVars:Object=null, transition:String=null):void
 		{
 			destroyScreen();
 			Log.log('[ScreenManager] showing screen ' + name);
 			if (launchVars == null) launchVars = { };
 			_currentScreen = createScreen(name);
 			_currentScreen.launchVars = launchVars;
-			addChild(_currentScreen);
-			_currentScreen.handleAddedToStage();
+			_canvas.addChild(_currentScreen.canvas);
+			_currentScreen.handleAdded();
 		}
 		
 		////////////////// PRIVATE
-		
-		
 			
 		private function destroyScreen():void
 		{
 			if (!_currentScreen) return;
-			Log.log('[ScreenManager] removing screen');
-			DisplayUtils.recursiveStop(_currentScreen);
+			_canvas.removeChild(_currentScreen.canvas);
 			_currentScreen.destroy();
-			removeChild(_currentScreen);
-			_currentScreen.handleRemovedFromStage();
 		}
 		
 		///////
@@ -81,6 +81,7 @@
 			} else {
 				scr = createPlaceholderScreen(name);
 			}
+			scr.manager = this;
 			scr.screenName = name;
 			return scr;
 		}
@@ -89,8 +90,20 @@
 		{
 			var scr:Screen = new Screen();
 			var t:String = 'Placeholder for screen ' + name;
-			scr.addChild(new Text(t));
+			scr.canvas.addChild(new Text(t));
 			return scr;
+		}
+		
+		/* INTERFACE org.fatlib.interfaces.ICanvas */
+		
+		public function get canvas():DisplayObjectContainer
+		{
+			return _canvas;
+		}
+		
+		public function destroy():void
+		{
+			//TODO
 		}
 
 	}

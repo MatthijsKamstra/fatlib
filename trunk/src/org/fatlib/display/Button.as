@@ -35,17 +35,20 @@
 		private var _hoverTimeout:Number;
 		private static var DEFAULT_HOVER_TIMEOUT:Number = 1000;
 		
+		private var _delay:Delay;
+		
 		/**
 		 * This sound will be triggered on mouse down.
 		 */
 		private var _downSound:Sound;
 		
-		private var _delay:Delay;
 		
 		
 		public function Button() 
 		{
 			super();
+			
+			_delay = new Delay();
 			
 			addEventListener(MouseEvent.MOUSE_OVER, onOver, false, 0, true);
 			addEventListener(MouseEvent.MOUSE_OUT, onOut, false, 0, true);
@@ -58,7 +61,6 @@
 			interactable = true;
 			actAsButton = true;
 			
-			_delay = new Delay();
 						
 		}
 		
@@ -87,9 +89,11 @@
 		
 		override public function destroy():void 
 		{
-			super.destroy();
 			_delay.destroy();
+			super.destroy();
 		}
+		
+
 		
 		///// PROTECTED
 			

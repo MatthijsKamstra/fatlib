@@ -142,7 +142,10 @@
 		
 		public function getConfigFromHash(name:String):Config
 		{
-			return new Config(_hashes[name]);
+			var xml:XML = _hashes[name];
+			var config:Config = new Config();
+			config.init(_hashes[name]);
+			return config;
 		}
 		
 	}
