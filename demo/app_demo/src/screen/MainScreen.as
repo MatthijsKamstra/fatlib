@@ -18,12 +18,21 @@
 			_canvas.addChild(new Text('Main screen'));
 			_canvas.addChild(new Text('fatlib version ' + Fatlib.VERSION)).y = 20;
 			_canvas.addChild(new WireframeButton('intro')).y = 50;
+			_canvas.addChild(new WireframeButton('log')).y = 70;
 			
 		}
 		
 		override protected function handleClicked(targetName:String):void 
 		{
-			gotoScreen(targetName);
+			switch(targetName)
+			{
+				case 'intro':
+					gotoScreen('intro');
+					break;
+				case 'log':
+					DemoApp.instance.processes.trigger('log');
+					break;
+			}
 		}
 		
 		

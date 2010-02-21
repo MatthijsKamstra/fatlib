@@ -15,6 +15,8 @@
 			DemoApp.instance.screens.register('intro', IntroScreen);
 			DemoApp.instance.screens.register('main', MainScreen);
 			
+			DemoApp.instance.processes.register('log', LogProcess);
+			
 			DemoApp.instance.screens.goto('load');
 			_delay = new Delay();
 			_delay.create(3000, loadingDone);
