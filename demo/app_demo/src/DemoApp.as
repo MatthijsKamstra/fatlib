@@ -21,7 +21,7 @@
 			instance = this;
 			
 			_screens = new ScreenManager();
-			canvas.addChild(_screens.canvas);
+			_display.addChild(_screens.display);
 			
 			var startUp:MacroProcess = new MacroProcess();
 			startUp.addProcess(new PrepAppProcess());

@@ -15,10 +15,10 @@
 		
 		override public function handleAdded():void 
 		{
-			_canvas.addChild(new Text('Main screen'));
-			_canvas.addChild(new Text('fatlib version ' + Fatlib.VERSION)).y = 20;
-			_canvas.addChild(new WireframeButton('intro')).y = 50;
-			_canvas.addChild(new WireframeButton('log')).y = 70;
+			_display.addChild(new Text('Main screen'));
+			_display.addChild(new Text('fatlib version ' + Fatlib.VERSION)).y = 20;
+			_display.addChild(new WireframeButton('intro')).y = 50;
+			_display.addChild(new WireframeButton('log')).y = 70;
 			
 		}
 		

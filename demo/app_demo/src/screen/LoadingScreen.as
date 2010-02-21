@@ -13,7 +13,7 @@
 		
 		override public function handleAdded():void 
 		{
-			_canvas.addChild(new Text('Loading...'));
+			_display.addChild(new Text('Loading...'));
 		}
 		
 	}
