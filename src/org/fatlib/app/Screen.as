@@ -82,11 +82,17 @@
 		
 		///////////
 		
-		protected function gotoScreen(screenName:String, launchVars:Object=null, transition:String = null):void
+		final protected function gotoScreen(screenName:String, launchVars:Object=null, transition:String = null):void
 		{
-			_manager.changeScreen(screenName, launchVars, transition);
+			_manager.goto(screenName, launchVars, transition);
 		}
-		
+	
+		/*
+		final protected function goBack():void
+		{
+			_manager.back();
+		}
+		*/
 		
 		////////
 		
