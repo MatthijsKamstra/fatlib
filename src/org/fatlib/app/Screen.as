@@ -34,7 +34,9 @@
 			_delay = new Delay();
 			_display = new Sprite();
 			_display.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
+			_display.addEventListener(Event.ENTER_FRAME, onFrame, false, 0, true);
 		}
+		
 		
 		
 		/**
@@ -52,9 +54,10 @@
 		
 		}
 		
-		protected function handleClicked(targetName:String):void
-		{
-		}
+		
+		
+		
+		
 		
 		public function get screenName():String { return _screenName; }
 		
@@ -82,6 +85,17 @@
 		
 		///////////
 		
+		
+		protected function handleClicked(targetName:String):void
+		{
+		}
+		
+		protected function handleFrame():void
+		{
+			
+		}
+		
+		
 		final protected function gotoScreen(screenName:String, launchVars:Object=null, transition:String = null):void
 		{
 			_manager.goto(screenName, launchVars, transition);
@@ -100,6 +114,13 @@
 		{
 			handleClicked(e.target.name);
 		}
+		
+		private function onFrame(e:Event):void 
+		{
+			handleFrame();
+		}
+		
+		
 		
 
 		
