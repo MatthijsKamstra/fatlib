@@ -10,10 +10,11 @@
 
 	public class DemoApp extends AppBase
 	{
-		
-		private var _screens:ScreenManager;
+		public static const VERSION:String = '0.0.1';
 		
 		public static var instance:DemoApp;
+		
+		private var _screens:ScreenManager;
 		
 		public function DemoApp(stage:Stage) 
 		{
