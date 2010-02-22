@@ -3,7 +3,6 @@
 	import org.fatlib.app.Screen;
 	import org.fatlib.display.Text;
 	import org.fatlib.display.WireframeButton;
-	import org.fatlib.Fatlib;
 	
 	public class IntroScreen extends Screen
 	{
