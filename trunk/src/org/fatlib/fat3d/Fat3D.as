@@ -5,7 +5,7 @@
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
-
+	import org.fatlib.utils.ArrayUtils;
 	import org.fatlib.interfaces.IDestroyable;
 	
 	
@@ -109,7 +109,7 @@
 				var dx:Number = cy * (sz * dify + cz * difx) - sy * difz;
 				var dy:Number = sx * (cy * difz + sy * (rz1)) + cx * (rz2);
 				var dz:Number = cx * (cy * difz  +sy * (rz1)) - sx * (rz2);
-				obj.userData.renderInfo = { dx:dx, dy:dy, dz:dz };
+				//obj.userData.renderInfo = { dx:dx, dy:dy, dz:dz };
 				
 				obj.render(_camera);
 				if (!obj.container) continue;
@@ -127,11 +127,11 @@
 					{
 						var scale:Number = 1;
 					} else {
-						scale= f * obj.scale * scaleFactor;
+						scale= f * obj.scale * _scaleFactor;
 					}
 					var scrx:Number = viewX+(dx * f);
 					var scry:Number = viewY + (dy * f);
-					obj.userData.screenInfo = { x:scrx, y: scry };
+					//obj.userData.screenInfo = { x:scrx, y: scry };
 					obj.container.transform.matrix = new Matrix(scale, 0, 0, scale, scrx, scry);
 				}
 			}

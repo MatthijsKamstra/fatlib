@@ -1,6 +1,7 @@
 ﻿package org.fatlib.fat3d
 {
 	import flash.display.*;
+	import org.fatlib.interfaces.ICloneable;
 	import org.fatlib.interfaces.IDestroyable
 
 	public class Object3D implements IDestroyable
@@ -155,6 +156,8 @@
 			return s;
 			
 		}
+		
+		
 		
 	}
 }
