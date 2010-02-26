@@ -162,6 +162,36 @@
 			
 		}
 		
+		/**
+		 * Rotate the object around a specified axis
+		 * 
+		 * @param	axis	The axis to rotate around
+		 * @param	angle	The angle of rotation
+		 */
+		public function rotate(axis:Point3D, angle:Number):void
+		{
+			//http://www.siggraph.org/education/materials/HyperGraph/modeling/mod_tran/3drota.htm
+			
+			var sin:Number = Math.sin(angle);
+			var cos:Number = Math.cos(angle);
+			
+			var mag:Number = Math.sqrt(axis.x * axis.x + axis.y * axis.y + axis.z * axis.z);
+			var normalized:Point3D = new Point3D(axis.x / mag, axis.y / mag, axis.z / mag);
+			
+			var n1:Number = normalized.x;
+			var n2:Number = normalized.y;
+			var n3:Number = normalized.z;
+			
+			var ox:Number = x;
+			var oy:Number = y;
+			var oz:Number = z;
+				
+			
+			x = ox * (n1 * n1 + (1 - n1 * n1) * cos) +  oy * (n1 * n2 * (1 - cos) + n3 * sin) + oz * (n1 * n3 * (1 - cos) - n2 * sin);
+			y = ox * (n1 * n2 * (1 - cos) - n3 * sin) + oy * (n2 * n2 + (1 - n2 * n2) * cos)   + oz * (n2 * n3 * (1 - cos) + n1 * sin);
+			z = ox * (n1 * n3 * (1 - cos) + n2 * sin) + oy * (n2 * n3 * (1 - cos) - n1 * sin)  + oz * (n3 * n3 + (1 - n3 * n3) * cos);
+			
+		}
 		
 		
 	}
