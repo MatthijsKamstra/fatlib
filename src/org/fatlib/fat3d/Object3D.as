@@ -22,11 +22,14 @@
 		
 		private var _fixedSize:Boolean = false;
 		
+		private var _userData:Object;
+		
 		public function Object3D()
 		{
 			_container = new Sprite();
 			_container.mouseChildren = false;
 			_container.mouseEnabled = false;
+			_userData = { };
 		}
 			
 		public function destroy():void
@@ -145,6 +148,8 @@
 		{
 			_fixedSize = value;
 		}
+		
+		public function get userData():Object { return _userData; }
 		
 		public function toString():String
 		{
