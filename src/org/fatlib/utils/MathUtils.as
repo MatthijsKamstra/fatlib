@@ -97,6 +97,28 @@ package org.fatlib.utils
 			
 			return (a1 > b0 && a0 < b1);
 		}
+		
+		
+		/**
+		 * 
+		 * Calculates the location of a two-dimensional cubic Bezier curve for a specific parameter
+		 * 
+		 * @param	p0	The first point of the bezier curve
+		 * @param	p1	The second point of the bezier curve
+		 * @param	p2	The third point of the bezier curve
+		 * @param	p3	The fourth point of the bezier curve
+		 * @param	parameter	The parameter, expressed as the fraction of progress along the curve
+		 * @return	A point containing the x and y coords of the Bezier curve at the specified parameter
+		 */
+		public static function getBezierValue(p0:Point, p1:Point, p2:Point, p3:Point, parameter:Number):Point
+		{
+			var t:Number = parameter;
+			var comp0:Point = new Point((1 - t) * (1 - t) * (1 - t) * p0.x, (1 - t) * (1 - t) * (1 - t) * p0.y);
+			var comp1:Point = new Point(3 * (1 - t) * (1 - t) * t * p1.x, 3 * (1 - t) * (1 - t) * t * p1.y);
+			var comp2:Point = new Point(3 * (1 - t) * t * t * p2.x, 3 * (1 - t) * t * t * p2.y);
+			var comp3:Point = new Point(t * t * t * p3.x, t * t * t * p3.y);
+			return new Point(comp0.x + comp1.x + comp2.x + comp3.x, comp0.y + comp1.y + comp2.y + comp3.y);
+		}
 	
 		
 	}
