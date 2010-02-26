@@ -23,7 +23,8 @@
 			_focalLength = value;
 		}
 		
-		override public function clone():Object3D
+		/*
+		 public function clone():Object3D
 		{
 			var r:Camera3D = new Camera3D();
 			r.x = x;
@@ -35,6 +36,7 @@
 			r.focalLength = focalLength;
 			return r;
 		}
+		*/
 	}
 	
 }
