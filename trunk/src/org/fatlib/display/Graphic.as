@@ -130,7 +130,7 @@
 			if (hasState(name)) 
 			{
 				if (_currentState)removeChild(_currentState);
-				_currentState = _states[name];
+				_currentState = getState(name);
 				_currentStateName = name;
 				addChild(_currentState);
 			} else {
@@ -155,7 +155,7 @@
 		 * @param	name	The name of the state to check
 		 * @return	Has the state with the given name has been registered?
 		 */
-		public function hasState(name:String):Boolean
+		public function hasState(name:*):Boolean
 		{
 			return _states[name]!=undefined;
 		}
@@ -201,7 +201,14 @@
 				if (s != BLANK || includeBlank) count++;
 			return count;
 		}
-			
+
+		
+		public function getState(name:*):DisplayObject
+		{
+			return _states[name];
+		}
+		
+		
 		/**
 		 * Called every frame
 		 */
