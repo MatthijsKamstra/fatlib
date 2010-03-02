@@ -1,4 +1,4 @@
-﻿package org.fatlib.display 
+﻿package org.fatlib.app 
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -10,13 +10,12 @@
 	import flash.events.EventDispatcher;
 	import flash.media.Sound;
 	import flash.text.TextField;
-	import org.fatlib.app.TextLookup;
+
+	import org.fatlib.Log;
 	import org.fatlib.assets.LoadStatus;
 	import org.fatlib.display.CheckBox;
 	import org.fatlib.display.Text;
 	import org.fatlib.events.LoadProgressEvent;
-	import org.fatlib.Log;
-	
 	import org.fatlib.assets.AssetBank;
 	import org.fatlib.display.Button;
 	import org.fatlib.display.Graphic;
