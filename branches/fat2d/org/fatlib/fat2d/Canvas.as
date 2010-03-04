@@ -4,11 +4,12 @@
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import org.fatlib.fat2d.Canvas;
 	import org.fatlib.interfaces.IDisplayable;
 
-	public class Canvas implements IDisplayable, IEntity
+	public class Canvas implements IDisplayable
 	{
 		
 		private var _display:Sprite;
@@ -32,9 +33,16 @@
 			return _display;
 		}
 		
-		public function blit(source:BitmapData, x:int, y:int):void
+		public function blit(source:BitmapData, x:int, y:int, transform:Matrix):void
 		{
-			_bitmap.copyPixels(source, source.rect, new Point(x, y));
+			if (transform.a==1 && transform.b==0 && transform.c==0 && transform.d== 1 && transform.tx==0 && transform.ty==0)
+			{
+				_bitmap.copyPixels(source, source.rect, new Point(x, y));
+			} else {
+				transform.translate(x, y);
+				_bitmap.draw(source, transform);
+			}
+			
 		}
 		
 		public function update(timeStep:Number = 0):void

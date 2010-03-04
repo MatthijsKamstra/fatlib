@@ -1,10 +1,14 @@
 ﻿package org.fatlib.fat2d 
 {
-	public class Object2D implements IEntity
+	import flash.geom.Matrix;
+	import org.fatlib.interfaces.ICloneable;
+	import org.fatlib.interfaces.IDestroyable;
+	
+	public class Object2D implements IDestroyable
 	{
 		
-		private var _x:Number;
-		private var _y:Number;
+		private var _x:Number = 0;
+		private var _y:Number = 0;
 		
 		public function Object2D() 
 		{
@@ -15,6 +19,10 @@
 		}
 		
 		public function render(canvas:Canvas = null):void
+		{
+		}
+		
+		public function destroy():void
 		{
 		}
 		
@@ -31,6 +39,8 @@
 		{
 			_y = value;
 		}
+		
+		
 		
 	}
 
