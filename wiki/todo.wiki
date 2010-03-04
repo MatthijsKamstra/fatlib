@@ -1,0 +1,3 @@
+#summary todo
+
+* Graphic - dispatch a STATE_CHANGE event
