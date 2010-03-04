@@ -25,6 +25,11 @@
 			return cols;
 		}
 		
+		public static function getRandomColor():int
+		{
+			return getRandomColors(1)[0];
+		}
+		
 		/**
 		 * Returns an array of random color RGB values
 		 * 

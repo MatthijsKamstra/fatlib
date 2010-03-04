@@ -5,6 +5,7 @@
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
+	import org.fatlib.interfaces.IDisplayable;
 	import org.fatlib.utils.ArrayUtils;
 	import org.fatlib.interfaces.IDestroyable;
 	
@@ -20,10 +21,10 @@
 	 *           y
 	 */
 	
-	public class Fat3D extends Sprite implements IDestroyable
+	public class Fat3D implements IDisplayable, IDestroyable
 	{
 		
-		
+		private var _display:DisplayObjectContainer;
 		private var _objects:Array;
 		private var _algorithms:Array;
 		private var _viewport:Rectangle;
@@ -32,6 +33,7 @@
 		
 		public function Fat3D(viewport:Rectangle)
 		{
+			_display = new Sprite();
 			_viewport = viewport;
 			_objects = new Array();
 			_algorithms = new Array();
@@ -60,12 +62,12 @@
 		public function addObject(obj:Object3D):void
 		{
 			_objects.push(obj);
-			addChild(obj.container);
+			_display.addChild(obj.container);
 		}
 		
 		public function removeObject(obj:Object3D):void
 		{
-			removeChild(obj.container);
+			_display.removeChild(obj.container);
 			ArrayUtils.remove(_objects, obj);
 		}
 				
@@ -154,6 +156,8 @@
 		{
 			_scaleFactor = value;
 		}
+		
+		public function get display():DisplayObjectContainer { return _display; }
 		
 	}
 }
