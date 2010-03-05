@@ -18,7 +18,9 @@
 	 * 
 	 * @usage
 	 * 
-	 * var config:Config = new Config(configXML);
+	 * var config:Config = new Config();
+	 * 
+	 * config.append(configXML);
 	 * 
 	 * trace(config.getProperty('song_url');
 	 * //	song.mp3
@@ -40,31 +42,32 @@
 		 */
 		public function Config()
 		{
-		}
-		
-		/**
-		 * initializes the object
-		 * 
-		 * @param	configXML	The XML object containing data to be accessed
-		 */
-		public function init(configXML:XML):void
-		{
-			Log.log("[Config] init");
-			
 			_props = { };
 			_hashes = { };
 			_lists = { };
+		}
+		
+		/**
+		 * appends data to the object
+		 * 
+		 * @param	configXML	The XML object containing data to be accessed
+		 */
+		public function append(configXML:XML):void
+		{
+			Log.log("[Config] append");
 			
 			for each(var node:XML in configXML.property)
 			{
 				var name:String = node.@name;
 				var value:String = node.@value;
+				if (_props[name]) Log.warn('[Config] overwriting property ' + name);
 				_props[name] = value;
 			}
 			
 			for each(node in configXML.hash)
 			{
 				name = node.@name;
+				if (_hashes[name]) Log.warn('[Config] overwriting hash ' + name);
 				_hashes[name] = node;
 			}
 			
@@ -76,6 +79,7 @@
 				{
 					list.push(item.@value);
 				}
+				if (_lists[name]) Log.warn('[Config] overwriting list ' + name);
 				_lists[name] = list;
 			}
 		}
@@ -144,7 +148,7 @@
 		{
 			var xml:XML = _hashes[name];
 			var config:Config = new Config();
-			config.init(_hashes[name]);
+			config.append(_hashes[name]);
 			return config;
 		}
 		
