@@ -1,86 +1,64 @@
 ﻿package org.fatlib.fat2d 
 {
+	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
+	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
+	import org.fatlib.game.GameComponent;
+	import org.fatlib.interfaces.IBlittable;
+	import org.fatlib.interfaces.IComponent;
 	import org.fatlib.interfaces.IDestroyable;
 	import org.fatlib.interfaces.IDisplayable;
+	import org.fatlib.interfaces.IRenderable;
 
-	public class Fat2D implements IDisplayable, IDestroyable
+	public class Fat2D extends Sprite2D implements IDisplayable
 	{
-		private var _canvas0:Canvas;
-		private var _canvas1:Canvas;
-		private var _activeCanvas:int = 0;
-		private var _objects:Array;
+//		private var _canvas0:Canvas;
+	//	private var _canvas1:Canvas;
+		private var _activeCanvas:Canvas;
 		private var _display:DisplayObjectContainer;
 				
 		public function Fat2D(width:int = 400, height:int = 400, fill:int = 0x333333) 
 		{
-			_canvas0 = new Canvas(width, height, fill);
-			_canvas1 = new Canvas(width, height, fill);
-			_objects = [];
+			
+			super();
+	//		_canvas0 = new Canvas(width, height, fill);
+		//	_canvas1 = new Canvas(width, height, fill);
+			_activeCanvas =  new Canvas(width, height, fill);//_canvas0;
 			
 			_display = new Sprite();
-			_display.addChild(_canvas0.display);
-			_display.addChild(_canvas1.display);
+			//_display.addChild(_canvas0.display);
+			_display.addChild(_activeCanvas.display);
+		//	_display.addChild(_canvas1.display);
 		}
 		
-		public function get display():DisplayObjectContainer
-		{
-			return _display;
-			
-		}
+		public function get display():DisplayObjectContainer { return _display; }
 		
-		public function addObject(o:Object2D):void
+		override protected function handleRender(params:* = null):void 
 		{
-			_objects.push(o);
-		}
-		
-		public function removeObject(name:String):void
-		{
-		}
-		
-		public function getObject(name:String):Object2D
-		{
-			return null;
-		}
-		
-		public function update(timeStep:Number = 0):void
-		{
-			for each(var o:Object2D in _objects)
+			_activeCanvas.clear();
+			/*
+			if (_activeCanvas == _canvas0)
 			{
-				o.update(timeStep);
-			}
-		}
-		
-		public function render(canvas:Canvas = null):void
-		{
-			if (_activeCanvas == 0)
-			{
-				var writeCanvas:Canvas = _canvas1;
+				_activeCanvas = _canvas1;
+				_canvas1.display.visible = true;
+				_canvas0.display.visible = false;
 			} else {
-				writeCanvas = _canvas0;
+				_activeCanvas = _canvas0;
+				_canvas0.display.visible = true;
+				_canvas1.display.visible = false;
 			}
-			
-			writeCanvas.render();
-			for each(var o:Object2D in _objects)
-			{
-				o.render(writeCanvas);
-			}
-			
-			_canvas0.display.visible = _activeCanvas == 0;
-			_canvas1.display.visible = _activeCanvas == 1;
-			
-			_activeCanvas = 1 - _activeCanvas;
-			
+			*/
+			//_activeCanvas.render();
 		}
 		
-		/* INTERFACE org.fatlib.interfaces.IDestroyable */
-		
-		public function destroy():void
+		override public function blit(source:BitmapData, sourceRect:Rectangle, transform:Matrix):void
 		{
+			_activeCanvas.blit(source, sourceRect, transform);
 			
 		}
-		
+				
 	}
 
 }

@@ -1,6 +1,8 @@
 package org.fatlib.utils
 {
 	import flash.geom.Point;
+	import org.fatlib.data.Point3D;
+	import org.fatlib.fat3d.Point3D;
 
 	/**
 	 * Provides math-related helper methods
@@ -120,6 +122,36 @@ package org.fatlib.utils
 			return new Point(comp0.x + comp1.x + comp2.x + comp3.x, comp0.y + comp1.y + comp2.y + comp3.y);
 		}
 	
+		/**
+		 * Rotate the point around a specified axis
+		 * 
+		 * @param	point	The point to rotate around
+		 * @param	axis	The axis to rotate around, expressed as the vector from (0,0) to the specified point
+		 * @param	angle	The angle of rotation
+		 */
+		static public function rotate3D(point:Point3D, axis:Point3D, angle:Number):Point3D
+		{
+			//http://www.siggraph.org/education/materials/HyperGraph/modeling/mod_tran/3drota.htm
+			
+			var sin:Number = Math.sin(angle);
+			var cos:Number = Math.cos(angle);
+			
+			var mag:Number = Math.sqrt(axis.x * axis.x + axis.y * axis.y + axis.z * axis.z);
+			var normalized:Point3D = new Point3D(axis.x / mag, axis.y / mag, axis.z / mag);
+			
+			var n1:Number = normalized.x;
+			var n2:Number = normalized.y;
+			var n3:Number = normalized.z;
+
+			x = point.x * (n1 * n1 + (1 - n1 * n1) * cos) +  point.y * (n1 * n2 * (1 - cos) + n3 * sin) + point.z * (n1 * n3 * (1 - cos) - n2 * sin);
+			y = point.x * (n1 * n2 * (1 - cos) - n3 * sin) + point.y * (n2 * n2 + (1 - n2 * n2) * cos)   + point.z * (n2 * n3 * (1 - cos) + n1 * sin);
+			z = point.x * (n1 * n3 * (1 - cos) + n2 * sin) + point.y * (n2 * n3 * (1 - cos) - n1 * sin)  + point.z * (n3 * n3 + (1 - n3 * n3) * cos);
+			
+			return Point3D(x, y, z);
+			
+		}
+		
+		
 		
 	}
 	
