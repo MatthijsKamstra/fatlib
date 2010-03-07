@@ -1,4 +1,4 @@
-﻿package org.fatlib.data 
+﻿package org.fatlib.struct 
 {
 	import org.fatlib.interfaces.ICloneable;
 	import org.fatlib.interfaces.IIterable;

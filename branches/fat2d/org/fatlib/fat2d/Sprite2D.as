@@ -1,5 +1,6 @@
 ﻿package org.fatlib.fat2d 
 {
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -7,6 +8,7 @@
 	import org.fatlib.game.GameComponent;
 	import org.fatlib.interfaces.IBlittable;
 	import org.fatlib.interfaces.IComponent;
+	import org.fatlib.utils.DisplayUtils;
 	
 	public class Sprite2D extends GameComponent implements IBlittable
 	{
@@ -30,11 +32,14 @@
 			m.scale(_scale, _scale);
 			m.translate( -centre.x * scale, -centre.y * scale);
 			m.rotate(_rotation);
-			m.translate(centre.x * scale, centre.y * scale);
-			m.translate(_x - centre.x * _scale, _y - centre.y * _scale);
+		//	m.translate(centre.x * scale, centre.y * scale);
+		//	m.translate(_x - centre.x * _scale, _y - centre.y * _scale);
+			m.translate(_x, _y);
 			blit(_bitmap, _bitmap.rect, m);
+	
 		}
-		
+			
+
 		public function blit(source:BitmapData, sourceRect:Rectangle, transform:Matrix):void
 		{
 			var m:Matrix = transform.clone();
@@ -48,6 +53,40 @@
 			(parent as IBlittable).blit(source, source.rect, m);
 		}
 	
+		
+		
+		/**
+		 * Use with images embedded [Embed]
+		 * eg. 
+		 * [Embed(source = 'data/jupiter.gif')]	private static var Planet:Class;
+		 * 
+		 * E(Planet);
+		 * 
+		 * 
+		 * @param	imgClass
+		 */
+		public function drawEmbeddedImage(imgClass:Class):void
+		{
+			bitmap = (new imgClass).bitmapData;
+		}
+		
+		public function drawText(text:String, color:int = 0xFF0000, x:Number = 0, y:Number = 0):void
+		{
+			DisplayUtils.drawText(text, this.bitmap, color, new Point(x, y));
+		}
+		
+		public function centreToBitmap():void
+		{
+			centre = new Point(_bitmap.width / 2, _bitmap.height / 2);
+		}
+		
+		/* INTERFACE org.fatlib.interfaces.IBlittable */
+		
+		public function fill(color:uint):void
+		{
+			_bitmap = new BitmapData(bitmap.width, bitmap.height, true, color);
+		}
+		
 		public function get x():Number { return _x; }
 		
 		public function set x(value:Number):void 
@@ -89,6 +128,8 @@
 		{
 			_centre = value;
 		}
+		
+		
 		
 		
 		

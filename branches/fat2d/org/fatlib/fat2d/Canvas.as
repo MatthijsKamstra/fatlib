@@ -12,23 +12,22 @@
 	import org.fatlib.game.GameComponent;
 	import org.fatlib.utils.ColorUtils;
 	
-	public class Canvas extends GameComponent implements IDisplayable, IBlittable
+	public class Canvas extends Sprite2D implements IDisplayable, IBlittable
 	{
 		private var _display:Sprite;
-		private var _bitmap:BitmapData;
 		private var _width:int;
 		private var _height:int;
 		private var _fill:int = 0x333333;
 		
-		public function Canvas(width:int, height:int, fill:int = 0x333333) 
+		public function Canvas(width:int, height:int, fill:Number = 0xFF333333) 
 		{
 			super();
 			_width = width;
 			_height = height;
 			_fill = fill;
-			_bitmap = new BitmapData(_width, _height, false, _fill);
+			bitmap = new BitmapData(_width, _height, true, _fill);
 			_display = new Sprite();
-			_display.addChild(new Bitmap(_bitmap));
+			_display.addChild(new Bitmap(bitmap));
 		}
 		
 		public function get display():DisplayObjectContainer
@@ -36,25 +35,15 @@
 			return _display;
 		}
 		
-		public function blit(source:BitmapData, sourceRect:Rectangle, transform:Matrix):void
+		override public function blit(source:BitmapData, sourceRect:Rectangle, transform:Matrix):void
 		{
-			
 			if (transform.a==1 && transform.b==0 && transform.c==0 && transform.d== 1)
 			{
-				_bitmap.copyPixels(source, sourceRect, new Point(transform.tx, transform.ty));
+				bitmap.copyPixels(source, sourceRect, new Point(transform.tx, transform.ty));
 			} else {
-				_bitmap.draw(source, transform);
+				bitmap.draw(source, transform);
 			}
-			
-			_bitmap.setPixel(200, 200, 0x000000);
 		}
-	
-	
-		public function clear():void
-		{
-			_bitmap.fillRect(_bitmap.rect, _fill);
-		}
-		
 		
 	}
 }

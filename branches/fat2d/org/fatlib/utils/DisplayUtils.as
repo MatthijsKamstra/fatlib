@@ -1,6 +1,7 @@
 package org.fatlib.utils
 {
 	import flash.display.*;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
@@ -205,6 +206,18 @@ package org.fatlib.utils
 				}
 			}
 			return children;
+		}
+		
+		public static function drawText(text:String, target:BitmapData, color:int = 0xFF0000, position:Point = null):void
+		{
+			if (position == null) position = new Point();
+			var t:TextField = new TextField();
+			t.autoSize = TextFieldAutoSize.LEFT;
+			t.text = text;
+			t.textColor = color;
+			var m:Matrix = new Matrix();
+			m.translate(position.x, position.y);
+			target.draw(t, m);
 		}
 		
 	}

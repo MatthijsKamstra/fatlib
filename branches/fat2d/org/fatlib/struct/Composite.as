@@ -1,4 +1,4 @@
-﻿package org.fatlib.comp 
+﻿package org.fatlib.struct 
 {
 	import org.fatlib.interfaces.IComponent;
 	import org.fatlib.interfaces.IComposite;

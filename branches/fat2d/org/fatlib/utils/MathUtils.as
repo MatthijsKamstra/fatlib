@@ -1,8 +1,7 @@
 package org.fatlib.utils
 {
 	import flash.geom.Point;
-	import org.fatlib.data.Point3D;
-	import org.fatlib.fat3d.Point3D;
+	import org.fatlib.struct.Point3D;
 
 	/**
 	 * Provides math-related helper methods
@@ -143,12 +142,18 @@ package org.fatlib.utils
 			var n2:Number = normalized.y;
 			var n3:Number = normalized.z;
 
-			x = point.x * (n1 * n1 + (1 - n1 * n1) * cos) +  point.y * (n1 * n2 * (1 - cos) + n3 * sin) + point.z * (n1 * n3 * (1 - cos) - n2 * sin);
-			y = point.x * (n1 * n2 * (1 - cos) - n3 * sin) + point.y * (n2 * n2 + (1 - n2 * n2) * cos)   + point.z * (n2 * n3 * (1 - cos) + n1 * sin);
-			z = point.x * (n1 * n3 * (1 - cos) + n2 * sin) + point.y * (n2 * n3 * (1 - cos) - n1 * sin)  + point.z * (n3 * n3 + (1 - n3 * n3) * cos);
+			var x:Number = point.x * (n1 * n1 + (1 - n1 * n1) * cos) +  point.y * (n1 * n2 * (1 - cos) + n3 * sin) + point.z * (n1 * n3 * (1 - cos) - n2 * sin);
+			var y:Number = point.x * (n1 * n2 * (1 - cos) - n3 * sin) + point.y * (n2 * n2 + (1 - n2 * n2) * cos)   + point.z * (n2 * n3 * (1 - cos) + n1 * sin);
+			var z:Number  = point.x * (n1 * n3 * (1 - cos) + n2 * sin) + point.y * (n2 * n3 * (1 - cos) - n1 * sin)  + point.z * (n3 * n3 + (1 - n3 * n3) * cos);
 			
-			return Point3D(x, y, z);
+			return new Point3D(x, y, z);
 			
+		}
+		
+
+		static public function randomRotation():Number
+		{
+			return Math.random() * 2 * Math.PI;
 		}
 		
 		

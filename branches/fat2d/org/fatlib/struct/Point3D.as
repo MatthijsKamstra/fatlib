@@ -1,4 +1,4 @@
-﻿package org.fatlib.data
+﻿package org.fatlib.struct
 {
 	public class Point3D 
 	{

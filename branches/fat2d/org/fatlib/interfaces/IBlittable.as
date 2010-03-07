@@ -7,6 +7,7 @@
 	public interface IBlittable 
 	{
 		function blit(source:BitmapData, sourceRect:Rectangle, transform:Matrix):void;
+		function fill(color:uint):void;
 	}
 	
 }
