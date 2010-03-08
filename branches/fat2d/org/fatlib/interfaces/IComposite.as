@@ -4,6 +4,6 @@
 	{
 		function add(component:IComponent):void;
 		function remove(componentName:String):void;
-		function getChild(childName:String):IComponent;
+		function getChild(childName:String):*;
 	}
 }

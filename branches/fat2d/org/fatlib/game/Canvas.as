@@ -11,23 +11,24 @@
 	import org.fatlib.interfaces.IDisplayable;
 	import org.fatlib.game.GameComponent;
 	import org.fatlib.utils.ColorUtils;
+	import org.fatlib.utils.DisplayUtils;
 	
-	public class Canvas extends GameComponent implements IDisplayable, IBlittable
+	public class Canvas extends EntityBehavior implements IDisplayable, IBlittable
 	{
 		private var _display:Sprite;
 		private var _width:int;
 		private var _height:int;
-		private var _fill:int = 0x333333;
+		private var _fillColor:int = 0x333333;
 		private var _rect:Rectangle;
 		private var _bitmap:BitmapData;
 		
-		public function Canvas(width:int, height:int, fill:Number = 0xFF333333) 
+		public function Canvas(width:int, height:int, fillColor:Number = 0xFF333333) 
 		{
 			super();
 			_width = width;
 			_height = height;
-			_fill = fill;
-			_bitmap = new BitmapData(_width, _height, true, _fill);
+			_fillColor = fillColor;
+			_bitmap = new BitmapData(_width, _height, false, _fillColor);
 			_display = new Sprite();
 			_display.addChild(new Bitmap(_bitmap));
 			_rect = new Rectangle(0, 0, _width, _height);
@@ -40,23 +41,28 @@
 		
 		public function get bitmap():BitmapData { return _bitmap; }
 		
+		public function get width():int { return _width; }
+		
+		public function get height():int { return _height; }
+		
+		public function get fillColor():int { return _fillColor; }
+		
 		public function blit(source:BitmapData, sourceRect:Rectangle, transform:Matrix):void
 		{
+			transform.scale(entity.scale, entity.scale);
+			transform.translate( width / 2 - entity.scale * entity.x, height / 2 - entity.scale * entity.y);
 			if (transform.tx<0 || transform.tx>_width || transform.ty<0 || transform.ty>_height)return;
-			
-			if (transform.a==1 && transform.b==0 && transform.c==0 && transform.d== 1)
-			{
-				_bitmap.copyPixels(source, sourceRect, new Point(int(transform.tx), int(transform.ty)));
-			} else {
-				_bitmap.draw(source, transform);
-			}
+			DisplayUtils.blit(source, _bitmap, sourceRect, transform);
 		}
 		
-		/* INTERFACE org.fatlib.interfaces.IBlittable */
+		override protected function handleRender(params:* = null):void 
+		{
+			fill(_fillColor);
+		}
 		
 		public function fill(color:uint):void
 		{
-			_bitmap.fillRect(_bitmap.rect, _fill);
+			_bitmap.fillRect(_bitmap.rect, _fillColor);
 		}
 		
 	}

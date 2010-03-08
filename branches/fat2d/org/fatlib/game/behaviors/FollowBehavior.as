@@ -2,6 +2,7 @@
 {
 	import org.fatlib.game.Entity;
 	import org.fatlib.game.EntityBehavior;
+	import org.fatlib.ui.Key;
 	import org.fatlib.utils.MathUtils;
 	
 	public class FollowBehavior extends EntityBehavior
@@ -21,6 +22,8 @@
 			
 			entity.x += (target.x - entity.x) / 5;
 			entity.y += (target.y - entity.y) / 5;
+			
+			if (Key.space) target = target.next;
 		}
 		
 		public function get target():Entity { return _target; }

@@ -17,7 +17,6 @@
 		protected var _destroyList:DestroyList;
 		protected var _delay:Delay;
 		
-		private var _world:GameComponent;
 		
 		public function GameComponent() 
 		{
@@ -47,19 +46,7 @@
 		{
 			_destroyList.destroy();
 		}
-		
-		public function set world(w:GameComponent):void
-		{
-			_world = w;
-		}
-		
-		public function get world():GameComponent 
-		{
-			if (_world) return _world;
-			if (parent) return (parent as GameComponent).world;
-			return null;
-		}
-		
+			
 		
 		////////////
 		

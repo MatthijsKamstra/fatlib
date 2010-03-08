@@ -15,17 +15,23 @@
 	{
 		private var _bitmap:BitmapData;
 		private var _centre:Point;
+		private var _target:IBlittable;
 		
-		public function BlitRenderer(bitmap:BitmapData = null) 
+		public function BlitRenderer(target:IBlittable = null, bitmap:BitmapData = null) 
 		{
 			super();
 			_centre = new Point();
 			_bitmap = bitmap;
+			_target = target;
 		}
 		
 		public function get target():IBlittable
 		{
-			return (entity.world as IBlittable);
+			if (!_target) return null;
+			//if (!entity.world) return null;
+			return(_target);
+		//	return (entity.world.getChild('canvas') as IBlittable)
+			//return (entity.world as IBlittable);
 		}
 		
 		override protected function handleRender(params:* = null):void 

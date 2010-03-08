@@ -6,9 +6,9 @@
 		function set name(n:String):void;
 		function get parent():IComposite;
 		function set parent(composite:IComposite):void;
-		function get next():IComponent;
+		function get next():*;
 		function set next(sibling:IComponent):void;
-		function get prev():IComponent;
+		function get prev():*;
 		function set prev(sibling:IComponent):void;
 	}
 }

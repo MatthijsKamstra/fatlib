@@ -2,6 +2,7 @@
 {
 	public class EntityBehavior extends GameComponent
 	{
+		
 		public function EntityBehavior() 
 		{
 			super();

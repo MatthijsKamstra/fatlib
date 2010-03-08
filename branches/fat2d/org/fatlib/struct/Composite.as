@@ -54,7 +54,7 @@
 			_lookup[componentName] = null;
 		}
 		
-		public function getChild(childName:String):IComponent
+		public function getChild(childName:String):*
 		{
 			return _lookup[childName];
 		}

@@ -31,14 +31,14 @@
 			_parent = value;
 		}
 		
-		public function get next():IComponent { return _next; }
+		public function get next():* { return _next; }
 		
 		public function set next(value:IComponent):void 
 		{
 			_next = value;
 		}
 		
-		public function get prev():IComponent { return _prev; }
+		public function get prev():* { return _prev; }
 		
 		public function set prev(value:IComponent):void 
 		{

@@ -18,6 +18,7 @@
 			if (Key.down) entity.y += _stepDistance * timeStep;
 			if (Key.left) entity.x -= _stepDistance * timeStep;
 			if (Key.right) entity.x += _stepDistance * timeStep;
+			
 		}
 		
 		

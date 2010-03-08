@@ -220,6 +220,17 @@ package org.fatlib.utils
 			target.draw(t, m);
 		}
 		
+		
+		public static function blit(source:BitmapData, target:BitmapData, sourceRect:Rectangle, transform:Matrix):void
+		{
+			if (transform.a==1 && transform.b==0 && transform.c==0 && transform.d== 1)
+			{
+				target.copyPixels(source, sourceRect, new Point(int(transform.tx), int(transform.ty)));
+			} else {
+				target.draw(source, transform);
+			}			
+		}
+		
 	}
 	
 }
