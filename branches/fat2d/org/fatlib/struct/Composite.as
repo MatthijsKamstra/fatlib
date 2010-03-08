@@ -12,6 +12,8 @@
 		private var _children:Array;
 		private var _lookup:Object;
 		
+		
+		
 		private static var COMPONENT_ID:int = 0;
 		
 		public function Composite():void
@@ -61,5 +63,7 @@
 		{
 			return new ArrayIterator(_children);
 		}
+		
+		public function get children():Array { return _children; }
 	}
 }

@@ -30,6 +30,7 @@
 		final public function update(params:*= null):void
 		{
 			handleGameUpdate(params);
+			if (children.length == 0) return;
 			var it:IIterator = getIterator();
 			while (it.hasNext)(it.next as IUpdatable).update(params);
 		}
@@ -37,6 +38,7 @@
 		final public function render(params:*= null):void
 		{
 			handleRender(params);	
+			if (children.length == 0) return;
 			var it:IIterator = getIterator();
 			while (it.hasNext)(it.next as IRenderable).render(params);
 		}
@@ -61,7 +63,7 @@
 		
 		////////////
 		
-		protected function handleGameUpdate(timeStep:Number = 0):void
+		protected function handleGameUpdate(timeStep:Number = 1):void
 		{
 		}
 		

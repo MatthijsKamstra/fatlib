@@ -1,4 +1,4 @@
-﻿package org.fatlib.fat2d 
+﻿package org.fatlib.game
 {
 	import flash.display.Bitmap;
 	import flash.geom.Matrix;
@@ -7,6 +7,8 @@
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
+	import org.fatlib.game.Canvas;
+	import org.fatlib.game.Entity;
 	import org.fatlib.game.GameComponent;
 	import org.fatlib.interfaces.IBlittable;
 	import org.fatlib.interfaces.IComponent;
@@ -15,7 +17,7 @@
 	import org.fatlib.interfaces.IRenderable;
 	import org.fatlib.utils.Delay;
 
-	public class Fat2D extends Sprite2D implements IDisplayable
+	public class Fat2D extends Entity implements IDisplayable, IBlittable
 	{
 		private var _canvas0:Canvas;
 		private var _canvas1:Canvas;
@@ -32,7 +34,6 @@
 		
 		private var _screen:BitmapData;
 		
-		
 		public function Fat2D(width:int = 400, height:int = 400, fill:int = 0x333333) 
 		{
 			
@@ -48,27 +49,24 @@
 			_canvas1.name = '1';
 			
 			_writeCanvas =  _canvas0;
-			
 				
 			_display = new Sprite();
 			_screen = new BitmapData(width, height, false, fill)
 			_display.addChild(new Bitmap(_screen));
 			//_display.addChild(_canvas1.display);
+			
+			
 			world = this;
 		}
 		
 		public function get display():DisplayObjectContainer { return _display; }
 		
 		
-		override protected function handleGameUpdate(timeStep:Number = 0):void 
-		{
-			render();
-			centre.x += 10
-		}
 		
 		override protected function handleRender(params:* = null):void 
 		{
 			_screen.copyPixels(_writeCanvas.bitmap, _writeCanvas.bitmap.rect, new Point(0, 0));
+
 			if (_writeCanvas == _canvas0)
 			{
 				_writeCanvas = _canvas1;
@@ -85,11 +83,24 @@
 		//	trace('filling ' + _writeCanvas.name);
 		}
 		
-		override public function blit(source:BitmapData, sourceRect:Rectangle, transform:Matrix):void
+		public function blit(source:BitmapData, sourceRect:Rectangle, transform:Matrix):void
 		{
-			transform.translate( -centre.x, -centre.y);
+			transform.scale(scale, scale);
+			transform.translate( _width / 2 - scale* x, _height / 2 - scale*y);
 			_writeCanvas.blit(source, sourceRect, transform);
 		//	trace('blitting to '+_writeCanvas.name);
+		}
+		
+		public function get bitmap():BitmapData
+		{
+			return _writeCanvas.bitmap;
+		}
+		
+		/* INTERFACE org.fatlib.interfaces.IBlittable */
+		
+		public function fill(color:uint):void
+		{
+			_writeCanvas.fill(color);
 		}
 		
 		

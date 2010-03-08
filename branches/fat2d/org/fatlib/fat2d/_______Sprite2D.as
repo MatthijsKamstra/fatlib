@@ -43,6 +43,7 @@
 		public function blit(source:BitmapData, sourceRect:Rectangle, transform:Matrix):void
 		{
 			var m:Matrix = transform.clone();
+			
 			if (parent is Sprite2D)
 			{
 				var p:Sprite2D = parent as Sprite2D;
@@ -65,9 +66,10 @@
 		 * 
 		 * @param	imgClass
 		 */
-		public function drawEmbeddedImage(imgClass:Class):void
+		public function drawEmbeddedImage(imgClass:Class, centre:Boolean = true):void
 		{
 			bitmap = (new imgClass).bitmapData;
+			if (centre)this.centre = new Point(bitmap.width / 2, bitmap.height / 2);
 		}
 		
 		public function drawText(text:String, color:int = 0xFF0000, x:Number = 0, y:Number = 0):void
