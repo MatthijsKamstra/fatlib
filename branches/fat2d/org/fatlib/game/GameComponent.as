@@ -23,6 +23,13 @@
 		public function render(params:* = null):void
 		{
 		}
+				
+		public function get gameObject():GameObject
+		{
+			if (!parent) return null;
+			if (parent is GameObject) return parent as GameObject;
+			return null;
+		}
 		
 	}
 

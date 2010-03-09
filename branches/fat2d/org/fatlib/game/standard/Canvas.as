@@ -7,14 +7,14 @@
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import org.fatlib.game.Renderer;
+	import org.fatlib.game.GameComponent;
 	import org.fatlib.interfaces.IBlittable;
 	import org.fatlib.interfaces.IDisplayable;
 	import org.fatlib.game.GameComponent;
 	import org.fatlib.utils.ColorUtils;
 	import org.fatlib.utils.DisplayUtils;
 	
-	public class Canvas extends Renderer implements IDisplayable, IBlittable
+	public class Canvas extends GameComponent implements IDisplayable, IBlittable
 	{
 		private var _display:Sprite;
 		private var _width:int;

@@ -1,9 +1,9 @@
 ﻿package org.fatlib.game.standard
 {
-	import org.fatlib.game.Behavior;
+	import org.fatlib.game.GameComponent;
 	import org.fatlib.ui.Key;
 	
-	public class KeyboardScrollBehavior extends Behavior
+	public class KeyboardScrollBehavior extends GameComponent
 	{
 		private var _stepDistance:Number=20;
 		

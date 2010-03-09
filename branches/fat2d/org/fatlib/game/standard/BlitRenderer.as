@@ -6,12 +6,11 @@
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import org.fatlib.game.GameComponent;
-	import org.fatlib.game.Renderer;
 	import org.fatlib.interfaces.IBlittable;
 	import org.fatlib.interfaces.IComponent;
 	import org.fatlib.utils.DisplayUtils;
 	
-	public class BlitRenderer extends Renderer implements IBlittable
+	public class BlitRenderer extends GameComponent implements IBlittable
 	{
 		private var _bitmap:BitmapData;
 		private var _centre:Point;

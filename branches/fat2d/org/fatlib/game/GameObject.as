@@ -15,7 +15,7 @@
 		private static const RENDER:String='render';
 						
 		private var _transform:Transform;
-		private var _renderer:Renderer;
+		private var _renderer:GameComponent;
 		
 		public function GameObject() 
 		{
@@ -53,9 +53,9 @@
 		
 		////////////
 		
-		public function get renderer():Renderer { return _renderer; }
+		public function get renderer():GameComponent { return _renderer; }
 		
-		public function set renderer(renderer:Renderer):void 
+		public function set renderer(renderer:GameComponent):void 
 		{
 			if (_renderer)
 			{
