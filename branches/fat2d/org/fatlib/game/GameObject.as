@@ -6,8 +6,6 @@
 	import org.fatlib.interfaces.IRenderable;
 	import org.fatlib.interfaces.IUpdatable;
 	import org.fatlib.struct.Composite;
-	import org.fatlib.utils.Delay;
-	import org.fatlib.utils.DestroyList;
 	
 	public class GameObject extends Composite implements IUpdatable, IRenderable, IDestroyable
 	{
@@ -51,17 +49,25 @@
 			while (it.hasNext)(it.next as IDestroyable).destroy();
 		}
 		
+		override public function add(component:IComponent):void 
+		{
+			super.add(component);
+			if (component is GameComponent)(component as GameComponent).onAdd();
+		}
+		
+		override public function remove(componentName:String):void 
+		{
+			if (getChild(componentName) is GameComponent)(getChild(componentName) as GameComponent).onRemove();
+			super.remove(componentName);
+		}
+		
 		////////////
 		
 		public function get renderer():GameComponent { return _renderer; }
 		
 		public function set renderer(renderer:GameComponent):void 
 		{
-			if (_renderer)
-			{
-				remove(_renderer.name);
-				_renderer.destroy();
-			}
+			if (_renderer) remove(_renderer.name);
 			_renderer = renderer;
 			add(_renderer);
 		}

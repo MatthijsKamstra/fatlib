@@ -17,7 +17,6 @@
 		
 		public function Transform() 
 		{
-			
 		}
 		
 		public function get x():Number { return _x; }

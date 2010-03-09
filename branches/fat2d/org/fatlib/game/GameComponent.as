@@ -5,14 +5,10 @@
 	import org.fatlib.interfaces.IUpdatable;
 	import org.fatlib.struct.Component;
 
-	public class GameComponent extends Component implements IUpdatable, IRenderable, IDestroyable
+	public class GameComponent extends Component implements IUpdatable, IRenderable
 	{
 		
 		public function GameComponent() 
-		{
-		}
-		
-		public function destroy():void
 		{
 		}
 		
@@ -29,6 +25,14 @@
 			if (!parent) return null;
 			if (parent is GameObject) return parent as GameObject;
 			return null;
+		}
+		
+		public function onAdd():void
+		{
+		}
+		
+		public function onRemove():void
+		{
 		}
 		
 	}
