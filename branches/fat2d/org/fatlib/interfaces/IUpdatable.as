@@ -2,7 +2,7 @@
 {
 	public interface IUpdatable 
 	{
-		function update(params:*= null):void;
+		function update(timeStep:Number = 1):void;
 	}
 	
 }

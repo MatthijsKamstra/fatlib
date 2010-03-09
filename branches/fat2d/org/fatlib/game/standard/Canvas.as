@@ -1,4 +1,4 @@
-﻿package org.fatlib.game 
+﻿package org.fatlib.game.standard
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -7,13 +7,14 @@
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import org.fatlib.game.Renderer;
 	import org.fatlib.interfaces.IBlittable;
 	import org.fatlib.interfaces.IDisplayable;
 	import org.fatlib.game.GameComponent;
 	import org.fatlib.utils.ColorUtils;
 	import org.fatlib.utils.DisplayUtils;
 	
-	public class Canvas extends EntityBehavior implements IDisplayable, IBlittable
+	public class Canvas extends Renderer implements IDisplayable, IBlittable
 	{
 		private var _display:Sprite;
 		private var _width:int;
@@ -49,13 +50,14 @@
 		
 		public function blit(source:BitmapData, sourceRect:Rectangle, transform:Matrix):void
 		{
-			transform.scale(entity.scale, entity.scale);
-			transform.translate( width / 2 - entity.scale * entity.x, height / 2 - entity.scale * entity.y);
+			
+			transform.scale(gameObject.transform.scale, gameObject.transform.scale);
+			transform.translate( width / 2 - gameObject.transform.scale * gameObject.transform.x, height / 2 - gameObject.transform.scale * gameObject.transform.y);
 			if (transform.tx<0 || transform.tx>_width || transform.ty<0 || transform.ty>_height)return;
 			DisplayUtils.blit(source, _bitmap, sourceRect, transform);
 		}
 		
-		override protected function handleRender(params:* = null):void 
+		override public function render(params:* = null):void 
 		{
 			fill(_fillColor);
 		}

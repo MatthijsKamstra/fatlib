@@ -1,4 +1,4 @@
-﻿package org.fatlib.game
+﻿package org.fatlib.game.standard
 {
 	import flash.display.Bitmap;
 	import flash.geom.Matrix;
@@ -32,7 +32,7 @@
 			_writeBitmap =  _bitmap0;
 		}
 		
-		override protected function handleRender(params:* = null):void 
+		override public function render(params:* = null):void 
 		{
 			bitmap.copyPixels(_writeBitmap, _writeBitmap.rect, new Point(0, 0));
 
@@ -53,8 +53,8 @@
 		
 		override public function blit(source:BitmapData, sourceRect:Rectangle, transform:Matrix):void
 		{
-			transform.scale(entity.scale, entity.scale);
-			transform.translate( width / 2 - entity.scale * entity.x, height / 2 - entity.scale * entity.y);
+			transform.scale(entity.transform.scale, entity.transform.scale);
+			transform.translate( width / 2 - entity.transform.scale * entity.transform.x, height / 2 - entity.transform.scale * entity.transform.y);
 			if (transform.tx<0 || transform.tx>width || transform.ty<0 || transform.ty>height)return;
 			DisplayUtils.blit(source, _writeBitmap, sourceRect, transform);
 		}

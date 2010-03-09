@@ -1,17 +1,17 @@
-﻿package org.fatlib.game.behaviors
+﻿package org.fatlib.game.standard
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import org.fatlib.game.EntityBehavior;
 	import org.fatlib.game.GameComponent;
+	import org.fatlib.game.Renderer;
 	import org.fatlib.interfaces.IBlittable;
 	import org.fatlib.interfaces.IComponent;
 	import org.fatlib.utils.DisplayUtils;
 	
-	public class BlitRenderer extends EntityBehavior implements IBlittable
+	public class BlitRenderer extends Renderer implements IBlittable
 	{
 		private var _bitmap:BitmapData;
 		private var _centre:Point;
@@ -28,20 +28,20 @@
 		public function get target():IBlittable
 		{
 			if (!_target) return null;
-			//if (!entity.world) return null;
+			//if (!gameObject.world) return null;
 			return(_target);
-		//	return (entity.world.getChild('canvas') as IBlittable)
-			//return (entity.world as IBlittable);
+		//	return (gameObject.world.getChild('canvas') as IBlittable)
+			//return (gameObject.world as IBlittable);
 		}
 		
-		override protected function handleRender(params:* = null):void 
+		override public function render(params:* = null):void 
 		{
 			//return;trac
 			
 			if (!target) return;
 			/*
 			var m:Matrix = new Matrix();
-			m.scale(entity.scale, entity.scale);
+			m.scale(gameObject.scale, gameObject.scale);
 			m.translate( -centre.x * scale, -centre.y * scale);
 			m.rotate(_rotation);
 			m.translate(_x, _y);
@@ -51,10 +51,10 @@
 			var m:Matrix = new Matrix();
 			//m.
 			m.translate( -centre.x, -centre.y);
-			m.scale(entity.scale, entity.scale);
-			m.rotate(entity.rotation);
-			m.translate(entity.x, entity.y);
-			//m.createBox(entity.scale, entity.scale, entity.rotation, entity.x + centre.x, entity.y + centre.y);
+			m.scale(gameObject.transform.scale, gameObject.transform.scale);
+			m.rotate(gameObject.transform.rotation);
+			m.translate(gameObject.transform.x, gameObject.transform.y);
+			//m.createBox(gameObject.scale, gameObject.scale, gameObject.rotation, gameObject.x + centre.x, gameObject.y + centre.y);
 			blit(bitmap, bitmap.rect, m);
 		}
 			
