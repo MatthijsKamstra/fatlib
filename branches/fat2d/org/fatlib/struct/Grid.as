@@ -7,12 +7,12 @@
 	/**
 	 * A 2D array or grid data structure
 	 */
-	public class Array2D implements IIterable, ICloneable
+	public class Grid implements IIterable, ICloneable
 	{
 		
 		private var _cols:Array;
-		private var _w:int;
-		private var _h:int;
+		private var _w:uint;
+		private var _h:uint;
 		
 		/**
 		 * A Creates a new instance
@@ -20,16 +20,16 @@
 		 * @param	w	The number of columns
 		 * @param	h	The number of rows
 		 */
-		public function Array2D(w:int, h:int) 
+		public function Grid(w:uint, h:uint) 
 		{
 			_w = w;
 			_h = h;
 			
 			_cols = new Array();
-			for (var i:int = 0; i < _w; i++)
+			for (var i:uint = 0; i < _w; i++)
 			{
 				var col:Array = new Array();
-				for (var j:int = 0; j < _h; j++)
+				for (var j:uint = 0; j < _h; j++)
 				{
 					var cell:Object = { contents:null };
 					col.push(cell);
@@ -69,7 +69,7 @@
 		 * @param	y	The y-position of the cell
 		 * @return	The contents of the specified cell
 		 */
-		public function getCell(x:int, y:int):*
+		public function getCell(x:uint, y:uint):*
 		{
 			if (x >= _w || x < 0 || y >= _h || y < 0) return null
 			return _cols[x][y].contents;
@@ -82,7 +82,7 @@
 		 * @param	y	The y-position of the cell
 		 * @param	c	An object to fill the the specified cell with
 		 */
-		public function setCell(x:int, y:int, c:*):void
+		public function setCell(x:uint, y:uint, c:*):void
 		{
 			if (x >= _w || x < 0 || y >= _h || y < 0) return;
 			_cols[x][y] = { contents:c };
@@ -96,13 +96,13 @@
 		 */
 		public function getIterator():IIterator
 		{
-			return new Array2DIterator(this);
+			return new GridIterator(this);
 		}
 		
 		public function clone():ICloneable
 		{
 			
-			var copy:Array2D = new Array2D(width, height);
+			var copy:Grid = new Grid(width, height);
 			for (var i:int = 0; i < width; i++)
 			{
 				for (var j:int = 0; j < height; j++)
@@ -119,8 +119,8 @@
 			return copy;
 		}
 		
-		public function get width():int { return _w; }
-		public function get height():int { return _h; }
+		public function get width():uint { return _w; }
+		public function get height():uint { return _h; }
 		
 		
 		
@@ -130,15 +130,15 @@
 }
 
 import org.fatlib.iterators.ArrayIterator;
-import org.fatlib.data.Array2D;
+import org.fatlib.struct.Grid;
 
-internal class Array2DIterator extends ArrayIterator
+internal class GridIterator extends ArrayIterator
 {
-	public function Array2DIterator(grid:Array2D) 
+	public function GridIterator(grid:Grid) 
 	{
 		var linear:Array = [];
-		for (var i:int = 0; i < grid.width; i++)
-			for (var j:int = 0; j < grid.height; j++)
+		for (var i:uint = 0; i < grid.width; i++)
+			for (var j:uint = 0; j < grid.height; j++)
 				linear.push(grid.getCell(i, j));
 		super(linear);
 	}

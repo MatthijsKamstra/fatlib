@@ -1,4 +1,4 @@
-﻿package org.fatlib.interfaces
+﻿package org.fatlib.game.interfaces
 {
 	public interface IRenderable
 	{

@@ -8,7 +8,10 @@
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import org.fatlib.game.GameComponent;
-	import org.fatlib.interfaces.IBlittable;
+	import org.fatlib.game.GameObject;
+	import org.fatlib.game.interfaces.IBlittable;
+	import org.fatlib.game.Transform;
+	import org.fatlib.game.World;
 	import org.fatlib.interfaces.IDisplayable;
 	import org.fatlib.game.GameComponent;
 	import org.fatlib.utils.ColorUtils;
@@ -22,6 +25,7 @@
 		private var _fillColor:int = 0x333333;
 		private var _rect:Rectangle;
 		private var _bitmap:BitmapData;
+		private var _camera:GameObject;
 		
 		public function Canvas(width:int, height:int, fillColor:Number = 0xFF333333) 
 		{
@@ -34,6 +38,8 @@
 			_display.addChild(new Bitmap(_bitmap));
 			_rect = new Rectangle(0, 0, _width, _height);
 		}
+		
+		
 		
 		public function get display():DisplayObjectContainer
 		{
@@ -48,12 +54,26 @@
 		
 		public function get fillColor():int { return _fillColor; }
 		
-		public function blit(source:BitmapData, sourceRect:Rectangle, transform:Matrix):void
+		public function get camera():GameObject 
+		{ 
+			if (!_camera) if (parent is World) return (parent as World).camera;
+			return _camera; 
+		}
+		
+		public function set camera(value:GameObject):void 
+		{
+			_camera = value;
+		}
+		
+		public function blit(source:BitmapData, sourceRect:Rectangle = null, transform:Matrix = null):void
 		{
 			
-			transform.scale(gameObject.transform.scale, gameObject.transform.scale);
-			transform.translate( width / 2 - gameObject.transform.scale * gameObject.transform.x, height / 2 - gameObject.transform.scale * gameObject.transform.y);
-			if (transform.tx<0 || transform.tx>_width || transform.ty<0 || transform.ty>_height)return;
+			if (sourceRect == null) sourceRect = source.rect;
+			if (transform == null) transform = new Matrix();
+			transform.scale(camera.transform.scale, camera.transform.scale);
+			transform.translate( width / 2 - camera.transform.scale * camera.transform.x, height / 2 - camera.transform.scale * camera.transform.y);
+			
+			//if (transform.tx<0 || transform.tx>_width || transform.ty<0 || transform.ty>_height)return;
 			DisplayUtils.blit(source, _bitmap, sourceRect, transform);
 		}
 		

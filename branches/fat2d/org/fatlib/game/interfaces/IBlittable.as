@@ -1,4 +1,4 @@
-﻿package org.fatlib.interfaces 
+﻿package org.fatlib.game.interfaces 
 {
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;
@@ -6,8 +6,10 @@
 	
 	public interface IBlittable 
 	{
-		function blit(source:BitmapData, sourceRect:Rectangle, transform:Matrix):void;
+		function blit(source:BitmapData, sourceRect:Rectangle = null, transform:Matrix = null):void;
 		function fill(color:uint):void;
+		function get width():int;
+		function get height():int;
 		function get bitmap():BitmapData;
 	}
 	

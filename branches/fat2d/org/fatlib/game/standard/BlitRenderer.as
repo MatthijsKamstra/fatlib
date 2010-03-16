@@ -6,11 +6,11 @@
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import org.fatlib.game.GameComponent;
-	import org.fatlib.interfaces.IBlittable;
+	import org.fatlib.game.interfaces.IBlittable;
 	import org.fatlib.interfaces.IComponent;
 	import org.fatlib.utils.DisplayUtils;
 	
-	public class BlitRenderer extends GameComponent implements IBlittable
+	public class BlitRenderer extends GameComponent 
 	{
 		private var _bitmap:BitmapData;
 		private var _centre:Point;
@@ -54,9 +54,10 @@
 			m.rotate(gameObject.transform.rotation);
 			m.translate(gameObject.transform.x, gameObject.transform.y);
 			//m.createBox(gameObject.scale, gameObject.scale, gameObject.rotation, gameObject.x + centre.x, gameObject.y + centre.y);
-			blit(bitmap, bitmap.rect, m);
+			target.blit(bitmap, bitmap.rect, m);
 		}
 			
+		/*
 		public function blit(source:BitmapData, sourceRect:Rectangle, transform:Matrix):void
 		{
 			target.blit(source, sourceRect, transform);
@@ -66,6 +67,8 @@
 		{
 			//bitmap=new BitmapData(_bitmap.width, _bitmap.width, true , color);
 		}
+		*/
+		
 		
 		/**
 		 * Use with images embedded [Embed]
@@ -87,6 +90,9 @@
 		{
 			DisplayUtils.drawText(text, this.bitmap, color, new Point(x, y));
 		}
+		
+		/* INTERFACE org.fatlib.interfaces.IBlittable */
+		
 		
 	
 		/* INTERFACE org.fatlib.interfaces.IBlittable */

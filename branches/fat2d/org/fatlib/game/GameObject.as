@@ -1,10 +1,10 @@
 ﻿package org.fatlib.game 
 {
+	import org.fatlib.game.interfaces.IRenderable;
+	import org.fatlib.game.interfaces.IUpdatable;
 	import org.fatlib.interfaces.IComponent;
 	import org.fatlib.interfaces.IDestroyable;
 	import org.fatlib.interfaces.IIterator;
-	import org.fatlib.interfaces.IRenderable;
-	import org.fatlib.interfaces.IUpdatable;
 	import org.fatlib.struct.Composite;
 	
 	public class GameObject extends Composite implements IUpdatable, IRenderable, IDestroyable
@@ -21,7 +21,7 @@
 			_transform = new Transform();
 		}
 		
-		final public function update(timeStep:Number = 1):void
+		public function update(timeStep:Number = 1):void
 		{
 			if (children.length == 0) return;
 			var it:IIterator = getIterator();
@@ -32,7 +32,7 @@
 			}
 		}
 		
-		final public function render(params:*= null):void
+		public function render(params:*= null):void
 		{
 			if (children.length == 0) return;
 			var it:IIterator = getIterator();

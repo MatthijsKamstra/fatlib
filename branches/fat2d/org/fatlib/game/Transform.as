@@ -15,8 +15,11 @@
 		
 		private var _scale:Number = 1;
 		
-		public function Transform() 
+		public function Transform(x:Number=0, y:Number=0, z:Number=0) 
 		{
+			_x = x;
+			_y = y;
+			_z = z;
 		}
 		
 		public function get x():Number { return _x; }

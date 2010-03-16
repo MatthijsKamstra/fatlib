@@ -1,8 +1,7 @@
 ﻿package org.fatlib.game
 {
-	import org.fatlib.interfaces.IDestroyable;
-	import org.fatlib.interfaces.IRenderable;
-	import org.fatlib.interfaces.IUpdatable;
+	import org.fatlib.game.interfaces.IRenderable;
+	import org.fatlib.game.interfaces.IUpdatable;
 	import org.fatlib.struct.Component;
 
 	public class GameComponent extends Component implements IUpdatable, IRenderable

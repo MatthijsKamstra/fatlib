@@ -8,13 +8,11 @@
 		
 		private var _name:String;
 		private var _parent:IComposite;
-		private var _userData:Object;
 		private var _next:IComponent;
 		private var _prev:IComponent;
 		
 		public function Component() 
 		{
-			_userData = { };
 		}
 		
 		public function get name():String { return _name; }
@@ -45,12 +43,6 @@
 			_prev = value;
 		}
 		
-		public function get userData():Object { return _userData; }
-		
-		public function set userData(value:Object):void 
-		{
-			_userData = value;
-		}
 		
 	}
 

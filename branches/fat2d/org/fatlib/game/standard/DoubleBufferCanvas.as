@@ -7,14 +7,10 @@
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
-	import org.fatlib.game.Canvas;
-	import org.fatlib.game.Entity;
 	import org.fatlib.game.GameComponent;
-	import org.fatlib.interfaces.IBlittable;
 	import org.fatlib.interfaces.IComponent;
 	import org.fatlib.interfaces.IDestroyable;
 	import org.fatlib.interfaces.IDisplayable;
-	import org.fatlib.interfaces.IRenderable;
 	import org.fatlib.utils.Delay;
 	import org.fatlib.utils.DisplayUtils;
 
@@ -24,7 +20,7 @@
 		private var _bitmap0:BitmapData;
 		private var _bitmap1:BitmapData;
 		
-		public function DoubleBufferCanvas(width:int = 400, height:int = 400, fillColor:uint = 0x333333) 
+		public function DoubleBufferCanvas(width:int, height:int, fillColor:uint = 0x333333) 
 		{
 			super(width, height, fillColor);
 			_bitmap0 = new BitmapData(width, height, false,  fillColor);
@@ -51,11 +47,15 @@
 		//	trace('filling ' + _writeCanvas.name);
 		}
 		
-		override public function blit(source:BitmapData, sourceRect:Rectangle, transform:Matrix):void
+		
+		override public function blit(source:BitmapData, sourceRect:Rectangle = null, transform:Matrix = null):void
 		{
-			transform.scale(entity.transform.scale, entity.transform.scale);
-			transform.translate( width / 2 - entity.transform.scale * entity.transform.x, height / 2 - entity.transform.scale * entity.transform.y);
-			if (transform.tx<0 || transform.tx>width || transform.ty<0 || transform.ty>height)return;
+		if (sourceRect == null) sourceRect = source.rect;
+			if (transform == null) transform = new Matrix();
+			transform.scale(camera.transform.scale, camera.transform.scale);
+			transform.translate( width / 2 - camera.transform.scale * camera.transform.x, height / 2 - camera.transform.scale * camera.transform.y);
+			
+			//if (transform.tx<0 || transform.tx>width || transform.ty<0 || transform.ty>height)return;
 			DisplayUtils.blit(source, _writeBitmap, sourceRect, transform);
 		}
 		

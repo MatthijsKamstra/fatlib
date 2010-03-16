@@ -11,17 +11,19 @@
 	{
 		private var _target:GameObject;
 		private var _halflife:Number = 2;
+		private var _lerp:Number = 1;
 		
-		public function FollowBehavior(target:GameObject) 
+		public function FollowBehavior(target:GameObject, lerp:Number = 1) 
 		{
 			super();
 			_target = target;
+			_lerp = lerp;
 		}
 		
 		override public function update(timeStep:Number = 1):void 
 		{
-			gameObject.transform.x += (_target.transform.x - gameObject.transform.x) / 5;
-			gameObject.transform.y += (_target.transform.y - gameObject.transform.y) / 5;
+			gameObject.transform.x += (_target.transform.x - gameObject.transform.x) / _lerp;
+			gameObject.transform.y += (_target.transform.y - gameObject.transform.y) / _lerp;
 			if (Key.space) _target = _target.next;
 		}
 		
