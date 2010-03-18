@@ -2,6 +2,6 @@
 {
 	public class Fatlib
 	{
-		public static const VERSION:String = '0.1.2';
+		public static const VERSION:String = '0.1.3';
 	}
 }
