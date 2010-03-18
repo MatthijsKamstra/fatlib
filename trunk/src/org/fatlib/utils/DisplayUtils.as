@@ -1,6 +1,7 @@
 package org.fatlib.utils
 {
 	import flash.display.*;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
@@ -190,6 +191,53 @@ package org.fatlib.utils
 			
 			
 		}
+
+		
+		
+		/**
+		 * Blits text onto a bitmap
+		 * 
+		 * @param	text	Text string
+		 * @param	target	Bitmap to bit onto
+		 * @param	color	Text color
+		 * @param	position	Text position
+		 */
+		public static function quickBlitText(text:String, target:BitmapData, position:Point = null, color:int = 0xFF0000):void
+		{
+			if (position == null) position = new Point();
+			var t:TextField = new TextField();
+			t.autoSize = TextFieldAutoSize.LEFT;
+			t.text = text;
+			t.textColor = color;
+			var m:Matrix = new Matrix();
+			m.translate(position.x, position.y);
+			target.draw(t, m);
+		}
+		
+		
+		/**
+		 * Blits bitmap data onto a target
+		 * 
+		 * @param	source		
+		 * @param	target
+		 * @param	sourceRect
+		 * @param	transform
+		 */
+		public static function blit(source:BitmapData, target:BitmapData, sourceRect:Rectangle = null, transform:Matrix = null):void
+		{
+			if (sourceRect == null) sourceRect = source.rect;
+			if (transform == null) transform = new Matrix();
+			
+			if (transform.a==1 && transform.b==0 && transform.c==0 && transform.d== 1)
+			{
+				target.copyPixels(source, sourceRect, new Point(int(transform.tx), int(transform.ty)));
+			} else {
+				target.draw(source, transform);
+			}			
+		}
+		
+		///////////
+		
 		
 		private static function getChildren(o:DisplayObjectContainer, children:Array = null):Array
 		{
@@ -206,6 +254,10 @@ package org.fatlib.utils
 			}
 			return children;
 		}
+		
+		
+
+		
 		
 	}
 	
