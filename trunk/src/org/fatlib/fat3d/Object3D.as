@@ -3,6 +3,7 @@
 	import flash.display.*;
 	import org.fatlib.interfaces.ICloneable;
 	import org.fatlib.interfaces.IDestroyable
+	import org.fatlib.struct.Point3D;
 
 	public class Object3D implements IDestroyable
 	{
