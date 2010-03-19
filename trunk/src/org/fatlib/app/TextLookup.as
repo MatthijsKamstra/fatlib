@@ -1,9 +1,10 @@
 ﻿package org.fatlib.app
 {
+	import org.fatlib.interfaces.IDestroyable;
 	/**
 	 * Given an XLIFF XML file, looks up text entried keyed by resname
 	 */
-	public class TextLookup
+	public class TextLookup implements IDestroyable
 	{
 		private var _units:Object;
 		
@@ -73,6 +74,13 @@
 				source = '!!! '+resname;
 			} 
 			return source;
+		}
+		
+		/* INTERFACE org.fatlib.interfaces.IDestroyable */
+		
+		public function destroy():void
+		{
+			
 		}
 		
 		

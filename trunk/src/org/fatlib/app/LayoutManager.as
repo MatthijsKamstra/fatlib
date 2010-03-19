@@ -10,6 +10,7 @@
 	import flash.events.EventDispatcher;
 	import flash.media.Sound;
 	import flash.text.TextField;
+	import org.fatlib.interfaces.IDestroyable;
 
 	import org.fatlib.Log;
 	import org.fatlib.assets.LoadStatus;
@@ -27,7 +28,7 @@
 	 * Constructs graphical elements defined in layout XML files.
 	 * 
 	 */
-	public class LayoutManager extends EventDispatcher 
+	public class LayoutManager extends EventDispatcher implements IDestroyable
 	{
 
 		[Event(name="onLoaded", 	type="org.fatlib.events.LoadProgressEvent")]
@@ -124,6 +125,14 @@
 				
 			return createElement(node);
 		}
+		
+		public function destroy():void
+		{
+			_assets.destroy();
+		}
+		
+		
+		
 	
 		/////////////////////
 		
@@ -439,6 +448,8 @@
 			return container;
 		}
 		
+		
+	
 				
 
 		
