@@ -56,9 +56,6 @@
 		
 		
 		
-		
-		
-		
 		public function get screenName():String { return _screenName; }
 		
 		public function set screenName(value:String):void 

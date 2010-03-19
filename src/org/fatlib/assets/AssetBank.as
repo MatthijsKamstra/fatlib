@@ -118,7 +118,16 @@
 		
 		public function destroy():void
 		{
-			// TODO implement
+			if (_itemLoader)
+			{
+				_itemLoader.removeEventListener(LoadProgressEvent.LOADED, onAssetLoaded);
+				_itemLoader.removeEventListener(LoadProgressEvent.PROGRESS, onAssetLoadProgress);
+				_itemLoader.removeEventListener(LoadProgressEvent.ERROR, onAssetLoadError);
+				_itemLoader = null;
+			}
+			for each(var o:* in _assets) delete _assets[o];
+			_assets = null;
+			
 		}
 		
 		/**
