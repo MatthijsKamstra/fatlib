@@ -94,6 +94,7 @@
 		private function destroyScreen():void
 		{
 			if (!_currentScreen) return;
+			_currentScreen.handleRemoved();
 			_display.removeChild(_currentScreen.display);
 			_currentScreen.destroy();
 		}

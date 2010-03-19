@@ -80,6 +80,7 @@
 		
 		public function destroy():void
 		{
+			_delay.destroy();
 			DisplayUtils.recursiveStop(_display);
 		}
 		
