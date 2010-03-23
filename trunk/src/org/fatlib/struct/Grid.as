@@ -7,7 +7,7 @@
 	/**
 	 * A 2D array or grid data structure
 	 */
-	public class Array2D implements IIterable, ICloneable
+	public class Grid implements IIterable, ICloneable
 	{
 		
 		private var _cols:Array;
@@ -20,7 +20,7 @@
 		 * @param	w	The number of columns
 		 * @param	h	The number of rows
 		 */
-		public function Array2D(w:int, h:int) 
+		public function Grid(w:int, h:int) 
 		{
 			_w = w;
 			_h = h;
@@ -96,13 +96,13 @@
 		 */
 		public function getIterator():IIterator
 		{
-			return new Array2DIterator(this);
+			return new GridIterator(this);
 		}
 		
 		public function clone():ICloneable
 		{
 			
-			var copy:Array2D = new Array2D(width, height);
+			var copy:Grid = new Grid(width, height);
 			for (var i:int = 0; i < width; i++)
 			{
 				for (var j:int = 0; j < height; j++)
@@ -130,11 +130,11 @@
 }
 
 import org.fatlib.iterators.ArrayIterator;
-import org.fatlib.data.Array2D;
+import org.fatlib.data.Grid;
 
-internal class Array2DIterator extends ArrayIterator
+internal class GridIterator extends ArrayIterator
 {
-	public function Array2DIterator(grid:Array2D) 
+	public function GridIterator(grid:Grid) 
 	{
 		var linear:Array = [];
 		for (var i:int = 0; i < grid.width; i++)
