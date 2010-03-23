@@ -30,10 +30,7 @@ package org.fatlib.utils
 				
 			for each(var i:Object in args)
 			{
-				if (!i is IDestroyable)
-				{
-					throw new Error('DestroyList: ' + i + ' does not implement IDestroyable');
-				}
+				if (!(i is IDestroyable))throw new Error(i + ' does not implement IDestroyable');
 				_list.push(i);
 			}
 		}
