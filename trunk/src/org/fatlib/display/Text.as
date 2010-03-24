@@ -117,20 +117,19 @@
 			_inputHilite.alpha = _hiliteAlpha;
 			_inputHilite.visible = false;
 			
-			isInput = false;
 			
 			_textField.addEventListener(TextEvent.TEXT_INPUT, onTextInput);
-			
 			_textField.addEventListener(MouseEvent.ROLL_OVER, onRollOver);
 			_textField.addEventListener(MouseEvent.ROLL_OUT, onRollOut);
 			_textField.addEventListener(FocusEvent.FOCUS_IN, onFocusIn);
 			_textField.addEventListener(FocusEvent.FOCUS_OUT, onFocusOut);
 			
-			
 			var canvas:Graphic = new Graphic();
 			canvas.addChild(_inputHilite);
 			canvas.addChild(_textField);
 			super(canvas);
+			
+			isInput = false;
 			
 		}
 		
