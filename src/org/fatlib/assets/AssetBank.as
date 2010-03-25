@@ -180,6 +180,7 @@
 			{
 				case 'jpg':
 				case 'png':
+				case 'gif':
 				case 'swf':
 					_itemLoader = new ImageLoader(id);
 					break;
