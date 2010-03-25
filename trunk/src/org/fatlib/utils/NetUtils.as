@@ -24,7 +24,7 @@ package org.fatlib.utils
 				return '';
 				
 			var ext:String = b.pop() as String;
-			return ext;
+			return ext.toLowerCase();
 		}
 		
 		/**
