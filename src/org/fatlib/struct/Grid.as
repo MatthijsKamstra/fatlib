@@ -130,7 +130,7 @@
 }
 
 import org.fatlib.iterators.ArrayIterator;
-import org.fatlib.data.Grid;
+import org.fatlib.struct.Grid;
 
 internal class GridIterator extends ArrayIterator
 {
