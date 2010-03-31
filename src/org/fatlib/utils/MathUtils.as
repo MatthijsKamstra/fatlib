@@ -76,6 +76,11 @@ package org.fatlib.utils
 			return Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y) + (p1.z - p2.z) * (p1.z - p2.z));
 		}
 		
+		public static function distance(p1:Point, p2:Point):Number
+		{
+			return Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
+		}
+		
 		/**
 		 * Determines whether two ranges overlap. 
 		 * 
