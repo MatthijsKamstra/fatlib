@@ -9,16 +9,13 @@
 	public class Composite extends Component implements IComposite, IIterable
 	{
 
-		private var _children:Array;
-		private var _lookup:Object;
-		
-		
+		protected var _lookup:Object;
+		private var _numChildren:uint = 0;
 		
 		private static var COMPONENT_ID:int = 0;
 		
 		public function Composite():void
 		{
-			_children = [];
 			_lookup = { };
 		}
 		
@@ -26,32 +23,15 @@
 		{
 			if (!component.name) component.name = 'Component_' + COMPONENT_ID++;
 			_lookup[component.name] = component;
-			_children[component.name] = component;
-			component.parent = this;
-			if (_children.length == 0)
-			{
-				component.next = component;
-				component.prev = component;
-			} else {
-				component.prev = _children[_children.length - 1];
-				component.next = _children[0];
-				(_children[_children.length - 1] as IComponent).next = component;
-				(_children[0] as IComponent).prev = component;
-			}
-			_children.push(component);
+			_numChildren++;
 		}
 		
-		public function remove(componentName:String):void
+		public function remove(childName:String):void
 		{
-			var comp:Component = _children[componentName];
-			comp.parent = null;
-			var left:IComponent= comp.prev;
-			var right:IComponent = comp.next;
-			comp.prev = null;
-			comp.next = null;
-			left.next = right;
-			right.prev = left;
-			_lookup[componentName] = null;
+			var comp:Component = getChild(childName);
+			if (!comp) return;
+			_lookup[childName] = null;
+			_numChildren--;
 		}
 		
 		public function getChild(childName:String):*
@@ -59,11 +39,18 @@
 			return _lookup[childName];
 		}
 		
-		public function getIterator():IIterator
+		public function get numChildren():uint
 		{
-			return new ArrayIterator(_children);
+			return _numChildren;
 		}
 		
-		public function get children():Array { return _children; }
+		public function getIterator():IIterator
+		{
+			var a:Array = [];
+			for each(var c:IComponent in _lookup)
+				a.push(c);
+			return new ArrayIterator(a);
+		}
+		
 	}
 }

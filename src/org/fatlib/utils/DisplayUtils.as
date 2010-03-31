@@ -1,6 +1,7 @@
 package org.fatlib.utils
 {
 	import flash.display.*;
+	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -223,16 +224,21 @@ package org.fatlib.utils
 		 * @param	sourceRect
 		 * @param	transform
 		 */
-		public static function blit(source:BitmapData, target:BitmapData, sourceRect:Rectangle = null, transform:Matrix = null):void
+		public static function blit(source:BitmapData, target:BitmapData, sourceRect:Rectangle = null, transform:Matrix = null, colorTransform:ColorTransform = null):void
 		{
 			if (sourceRect == null) sourceRect = source.rect;
 			if (transform == null) transform = new Matrix();
+			if (colorTransform == null)
+			{
+				var originalColor:Boolean = true;
+				colorTransform = new ColorTransform();
+			}
 			
-			if (transform.a==1 && transform.b==0 && transform.c==0 && transform.d== 1)
+			if (transform.a==1 && transform.b==0 && transform.c==0 && transform.d== 1 && originalColor)
 			{
 				target.copyPixels(source, sourceRect, new Point(int(transform.tx), int(transform.ty)));
 			} else {
-				target.draw(source, transform);
+				target.draw(source, transform, colorTransform);
 			}			
 		}
 		
