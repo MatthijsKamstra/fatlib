@@ -3,7 +3,8 @@
 	public interface IComposite extends IComponent
 	{
 		function add(component:IComponent):void;
-		function remove(componentName:String):void;
-		function getChild(childName:String):*;
+		function remove(component:IComponent):void;
+		function removeByID(id:*):void;
+		function getChild(id:*):*;
 	}
 }

@@ -2,7 +2,7 @@
 {
 	public interface IComponent 
 	{
-		function get name():String;
-		function set name(n:String):void;
+		function get id():*;
+		function set id(i:*):void;
 	}
 }

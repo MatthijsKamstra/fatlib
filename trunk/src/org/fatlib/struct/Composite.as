@@ -21,22 +21,31 @@
 		
 		public function add(component:IComponent):void
 		{
-			if (!component.name) component.name = 'Component_' + COMPONENT_ID++;
-			_lookup[component.name] = component;
+			if (!component.id) component.id = 'Component_' + COMPONENT_ID++;
+			_lookup[component.id] = component;
 			_numChildren++;
 		}
 		
-		public function remove(childName:String):void
+		public function remove(component:IComponent):void
 		{
-			var comp:Component = getChild(childName);
+			if (_lookup[component.id])
+			{
+				_lookup[component.id] = null;
+				_numChildren--;
+			}
+		}
+		
+		public function removeByID(id:*):void
+		{
+			var comp:Component = getChild(id);
 			if (!comp) return;
-			_lookup[childName] = null;
+			_lookup[id] = null;
 			_numChildren--;
 		}
 		
-		public function getChild(childName:String):*
+		public function getChild(id:*):*
 		{
-			return _lookup[childName];
+			return _lookup[id];
 		}
 		
 		public function get numChildren():uint
