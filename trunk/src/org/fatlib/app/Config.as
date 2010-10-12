@@ -152,6 +152,81 @@
 			return config;
 		}
 		
+		////////////////////
+		
+		
+		///////////////////
+		
+		public function generateXML():XML
+		{
+			var node:XML;
+			var name:String;
+			var x:XML = new XML(<config/>);
+			for (name in _props)
+			{
+				node =	<property/>
+				node.@name = name;
+				node.@value = _props[name];
+				x = x.appendChild(node);
+			}
+			for (name in _lists)
+			{
+				node =<list/>
+				node.@name = name;
+				for each(var item:String in _lists[name])
+				{
+					var listNode:XML =<item/>
+					listNode.@value = item;
+					node = node.appendChild(listNode);
+				}
+				x = x.appendChild(node);
+			}
+			for (name in _hashes)
+			{
+				node =<hash/>
+				node.@name = name;
+				for each(var child:XML in _hashes[name])
+				{
+					node.appendChild(child);
+				}
+				x = x.appendChild(node);
+			}
+			return x;
+		}
+		
+		
+		public function setProp(name:String, value:String):void
+		{
+			_props[name] = value;
+		}
+		
+		public function setInt(name:String, value:int):void
+		{
+			_props[name] = value.toString();
+		}
+		
+		public function setFloat(name:String, value:Number):void
+		{
+			_props[name] = value.toString();
+		}
+		
+		public function setBoolean(name:String, value:Boolean):void
+		{
+			value? _props[name] = 'true' : _props[name] = 'false';
+		}
+		
+		public function setList(name:String, value:Array):void
+		{
+			_lists[name] = value;
+		}
+		
+		public function setHash(name:String, value:Config):void
+		{
+			_hashes[name] = value.generateXML();
+		}
+		
+		
+		
 	}
 	
 }
