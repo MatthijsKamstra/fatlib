@@ -117,6 +117,7 @@
 		{
 			// find the node with the specified id
 			var node:XML = findNode(_aggregatedXML, id);
+			
 			if (!node)
 			{
 				Log.warn("No node named " + id + " in layout XML");
@@ -143,10 +144,9 @@
 			switch(nodeName)
 			{
 				case 'image':
-					element = createImage(node);
-					break;
 				case 'button':
-					element = createImage(node, true);
+				case 'checkbox':
+					element = createImage(node, nodeName);
 					break;
 				case 'text':
 					element = createText(node);
@@ -195,7 +195,7 @@
 			var retNode:XML;
 			for each(var node:XML in xml.children())
 			{
-				if (node.@id == id)
+				if (node.@id == id || node.@src == id)
 				{
 					retNode = node;
 				} else {
@@ -206,21 +206,26 @@
 			return retNode;
 		}
 		
-		protected function createImage(node:XML, isButton:Boolean=false):Graphic
+		
+		protected function createImage(node:XML, type:String = null):Graphic
 		{
 			var src:String = node.@src;
 			
 			var graphic:Graphic;
 			
-			if (isButton)
+			switch(type)
 			{
-				graphic = new Button();
-				
-			} else if (node.@checkbox == 'true') {
-				var checked:Boolean = (node.@checked == 'true');
-				graphic = new CheckBox(checked);				
-			} else {
-				graphic = new Graphic();
+				case 'button':
+					graphic = new Button();
+					break;
+				case 'checkbox':
+					var checked:Boolean = (node.@checked == 'true');
+					graphic = new CheckBox(checked);				
+					break; 
+				default:
+				case 'image':
+					graphic = new Graphic();	
+					break;
 			}
 			
 			if (node.state.length() > 0)
@@ -385,6 +390,8 @@
 			{
 				case 'jpg':
 				case 'png':
+				case 'gif':
+				case 'jpeg':
 					output = _assets.getBitmap(src);
 					if (output == null) output = new Text('missing graphic: ' + src);
 					break;
