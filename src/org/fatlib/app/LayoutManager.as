@@ -227,7 +227,9 @@
 			{
 				for each(var stateXML:XML in node.state)
 				{
+					
 					var state:String = stateXML.@name;
+					
 					src = stateXML.@src;
 					var image:DisplayObject = instantiate(src) as DisplayObject;
 					
@@ -360,7 +362,18 @@
 		
 		protected function createSound(node:XML):Sound
 		{
-			var src:String = node.@src;
+			var src:String;
+			if (node.variation.length() > 0)
+			{
+				var v:Array = new Array();
+				for each(var variationXML:XML in node.variation)
+				{
+					v.push(variationXML.@src);
+				}
+				src = ArrayUtils.pickOne(v);
+			} else {
+				src = node.@src;
+			}
 			return instantiate(src) as Sound;
 		}
 		
