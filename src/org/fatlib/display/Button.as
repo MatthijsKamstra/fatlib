@@ -15,68 +15,27 @@
 	 * If no DISABLED state is defined, the UP state is shown at 30% alpha.
 	 * 
 	 */
-	public class Button extends Graphic
+	public class Button extends AudioButtonBase
 	{
 		public static const UP:String = 'up';
 		public static const OVER:String = 'over';
 		public static const DISABLED:String = 'disabled';
-		
-		/**
-		 * This sound will be triggered on mouse over
-		 */
-		private var _overSound:Sound;
-		
-		/**
-		 * This sound will be triggered after the mouse has hovered over the button for
-		 * a certain length of time, defined by the _hoverTimeout property
-		 */
-		private var _hoverSound:Sound;
-		private var _hoverSoundChannel:SoundChannel;
-		private var _hoverTimeout:Number;
-		private static var DEFAULT_HOVER_TIMEOUT:Number = 1000;
-		
-		private var _delay:Delay;
-		
-		/**
-		 * This sound will be triggered on mouse down.
-		 */
-		private var _downSound:Sound;
-		
 		
 		
 		public function Button() 
 		{
 			super();
 			
-			_delay = new Delay();
-			
 			addEventListener(MouseEvent.MOUSE_OVER, onOver, false, 0, true);
 			addEventListener(MouseEvent.MOUSE_OUT, onOut, false, 0, true);
-			addEventListener(MouseEvent.CLICK, onDown, false, 0, true);
 			
 			registerState(UP);
 			registerState(OVER);
-			
+									
 			childrenInteractable = false;
 			interactable = true;
 			actAsButton = true;
-			
 						
-		}
-		
-		public function set overSound(value:Sound):void 
-		{
-			_overSound = value;
-		}
-		
-		public function set downSound(value:Sound):void 
-		{
-			_downSound = value;
-		}
-		
-		public function set hoverSound(value:Sound):void 
-		{
-			_hoverSound = value;
 		}
 		
 		override public function registerState(key:*, state:DisplayObject=null):void 
@@ -87,13 +46,6 @@
 				showState(UP);
 		}
 		
-		override public function destroy():void 
-		{
-			_delay.destroy();
-			super.destroy();
-		}
-		
-
 		
 		///// PROTECTED
 			
@@ -122,35 +74,14 @@
 		private function onOver(e:MouseEvent):void 
 		{
 			showState(OVER);
-			if (_overSound)_overSound.play();
-			
-			if (_hoverSound)
-			{
-				if (!_hoverTimeout)_hoverTimeout = DEFAULT_HOVER_TIMEOUT;
-				_delay.create(_hoverTimeout, playHoverSound);
-			}
 		}
 		
-		private function playHoverSound():void 
-		{
-			_hoverSoundChannel = _hoverSound.play();
-		}
-		
+
 		private function onOut(e:MouseEvent):void 
 		{
 			showState(UP);
-		
-			_delay.cancelAll();
-			if (_hoverSoundChannel)
-			{
-				_hoverSoundChannel.stop();
-				_hoverSoundChannel = null;
-			}
 		}
 		
-		private function onDown(e:MouseEvent):void 
-		{
-			if (_downSound)	_downSound.play();
-		}
+
 	}
 }

@@ -14,10 +14,8 @@
 	 * 	off_over: The over state of the 'off' state
 	 * 
 	 */
-	public class CheckBox extends Graphic
+	public class CheckBox extends AudioButtonBase
 	{
-		public static const ON:String = 'on';
-		public static const OFF:String = 'off';
 		
 		public static const ON_UP:String = 'on_up';
 		public static const ON_OVER:String = 'on_over';
@@ -29,29 +27,40 @@
 		 */
 		private var _checked:Boolean;
 		
-		private var _onButton:Button;
-		private var _offButton:Button;
-			
+		private var _mouseOver:Boolean = false;
+		
 		/**
 		 * Creates a new instance
 		 * 
 		 * @param	checked	Is it initially checked?
 		 */
-		public function CheckBox(checked:Boolean) 
+		public function CheckBox(checked:Boolean = false) 
 		{
 			super();
 			
-			_onButton = new Button();
-			_offButton = new Button();
-			
-			_onButton.addEventListener(MouseEvent.CLICK, onToggle);
-			_offButton.addEventListener(MouseEvent.CLICK, onToggle);
-			
-			registerState(ON, _onButton);
-			registerState(OFF, _offButton);
-			
+			addEventListener(MouseEvent.MOUSE_OVER, onOver, false, 0, true);
+			addEventListener(MouseEvent.MOUSE_OUT, onOut, false, 0, true);
+			addEventListener(MouseEvent.CLICK, onToggle, false, 0, true);
+		
 			_checked = checked;
-			updateState();
+
+			registerState(ON_UP);
+			registerState(ON_OVER);
+			registerState(OFF_UP);
+			registerState(OFF_OVER);
+			
+			childrenInteractable = false;
+			interactable = true;
+			actAsButton = true;
+			
+			update();
+		}
+		
+		
+		override public function registerState(name:*, state:DisplayObject = null):void 
+		{
+			super.registerState(name, state);
+			update();
 		}
 		
 		public function get checked():Boolean { return _checked; }
@@ -59,59 +68,50 @@
 		public function set checked(value:Boolean):void 
 		{
 			_checked = value;
-			updateState();
+			update();
 		}
-		
-		
-		private function updateState():void
-		{
-			if (_checked)
-			{
-				showState(ON);
-			} else {
-				showState(OFF);
-			}
-		}
-		
+	
 		private function onToggle(e:MouseEvent):void 
 		{
-			_checked = !_checked;
-			updateState();
+			checked = !checked;
+		}
+			
+		private function update():void
+		{
+			if (checked)
+			{
+				if (_mouseOver)
+				{
+					if (hasState(ON_OVER)) showState(ON_OVER);
+				} else {
+					if (hasState(ON_UP)) showState(ON_UP);
+				}
+			} else {
+				if (_mouseOver)
+				{
+					if (hasState(OFF_OVER)) showState(OFF_OVER);
+				} else {
+					if (hasState(OFF_UP)) showState(OFF_UP);
+				}
+			}
 		}
 		
 
-		override public function registerState(key:*, state:DisplayObject=null):void 
+		private function onOut(e:MouseEvent):void 
 		{
-			switch(key)
-			{
-				case ON_OVER:
-					_onButton.registerState(Button.OVER, state);
-					break;
-				case ON_UP:
-					_onButton.registerState(Button.UP, state);
-					break;
-				case OFF_OVER:
-					_offButton.registerState(Button.OVER, state);
-					break;
-				case OFF_UP:
-					_offButton.registerState(Button.UP, state);
-					break;
-				case BLANK:
-				case ON:
-				case OFF:
-					super.registerState(key, state);
-					break;
-				default:
-					Log.log("[CheckBox] Unknown state:" + key);
-					break;
-			}
-			
+			_mouseOver = false;
+			update();
 		}
-	
-		public function get onButton():Button { return _onButton; }
-		public function get offButton():Button { return _offButton; }
-	
 		
+		private function onOver(e:MouseEvent):void 
+		{
+			_mouseOver = true;
+			update();
+		}
+		
+		
+		
+
 	}
 	
 }
