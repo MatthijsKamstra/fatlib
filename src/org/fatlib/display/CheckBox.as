@@ -14,7 +14,7 @@
 	 * 	off_over: The over state of the 'off' state
 	 * 
 	 */
-	public class CheckBox extends AudioButtonBase
+	public class CheckBox extends Graphic
 	{
 		
 		public static const ON_UP:String = 'on_up';
