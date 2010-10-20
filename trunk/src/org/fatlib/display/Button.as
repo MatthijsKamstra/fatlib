@@ -15,7 +15,7 @@
 	 * If no DISABLED state is defined, the UP state is shown at 30% alpha.
 	 * 
 	 */
-	public class Button extends AudioButtonBase
+	public class Button extends Graphic
 	{
 		public static const UP:String = 'up';
 		public static const OVER:String = 'over';
