@@ -40,7 +40,7 @@
 			
 			addEventListener(MouseEvent.MOUSE_OVER, onOver, false, 0, true);
 			addEventListener(MouseEvent.MOUSE_OUT, onOut, false, 0, true);
-			addEventListener(MouseEvent.CLICK, onToggle, false, 0, true);
+			addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
 		
 			_checked = checked;
 
@@ -71,8 +71,9 @@
 			update();
 		}
 	
-		private function onToggle(e:MouseEvent):void 
+		private function onClick(e:MouseEvent):void 
 		{
+			if (!interactive) return;
 			checked = !checked;
 		}
 			
