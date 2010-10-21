@@ -118,11 +118,14 @@
 			_inputHilite.visible = false;
 			
 			
+			
 			_textField.addEventListener(TextEvent.TEXT_INPUT, onTextInput);
+			
 			_textField.addEventListener(MouseEvent.ROLL_OVER, onRollOver);
 			_textField.addEventListener(MouseEvent.ROLL_OUT, onRollOut);
 			_textField.addEventListener(FocusEvent.FOCUS_IN, onFocusIn);
 			_textField.addEventListener(FocusEvent.FOCUS_OUT, onFocusOut);
+			
 			
 			var canvas:Graphic = new Graphic();
 			canvas.addChild(_inputHilite);
@@ -160,6 +163,7 @@
 		 */
 		public function set text(t:String):void
 		{
+			if (!t) t = '';
 			if (_isHTML)
 			{
 				_textField.htmlText = t;
