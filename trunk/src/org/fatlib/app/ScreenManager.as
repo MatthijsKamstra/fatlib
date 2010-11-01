@@ -74,6 +74,7 @@
 			_currentScreen = createScreen(name);
 			_currentScreen.launchVars = launchVars;
 			_display.addChild(_currentScreen.display);
+			if (display.stage) display.stage.focus = display.stage;
 			_currentScreen.handleAdded();
 		}
 		
