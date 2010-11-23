@@ -5,11 +5,13 @@
 	import org.fatlib.interfaces.IIterable;
 	import org.fatlib.interfaces.IIterator;
 	import org.fatlib.iterators.ArrayIterator;
+	import org.fatlib.utils.ArrayUtils;
 
-	public class Composite extends Component implements IComposite, IIterable
+	public class Composite extends Component implements IComposite
 	{
 
-		protected var _lookup:Object;
+		private var _lookup:Object;
+		private var _children:Array
 		private var _numChildren:uint = 0;
 		
 		private static var COMPONENT_ID:int = 0;
@@ -17,12 +19,14 @@
 		public function Composite():void
 		{
 			_lookup = { };
+			_children = [];
 		}
 		
 		public function add(component:IComponent):void
 		{
 			if (!component.id) component.id = 'Component_' + COMPONENT_ID++;
 			_lookup[component.id] = component;
+			_children.push(component);
 			_numChildren++;
 		}
 		
@@ -30,7 +34,8 @@
 		{
 			if (_lookup[component.id])
 			{
-				_lookup[component.id] = null;
+				ArrayUtils.remove(_children, component);
+				delete _lookup[component.id];
 				_numChildren--;
 			}
 		}
@@ -39,8 +44,12 @@
 		{
 			var comp:Component = getChild(id);
 			if (!comp) return;
-			_lookup[id] = null;
-			_numChildren--;
+			remove(comp);
+		}
+		
+		public function hasChild(id:*):Boolean
+		{
+			return _lookup[id] != null;
 		}
 		
 		public function getChild(id:*):*
@@ -55,10 +64,7 @@
 		
 		public function getIterator():IIterator
 		{
-			var a:Array = [];
-			for each(var c:IComponent in _lookup)
-				a.push(c);
-			return new ArrayIterator(a);
+			return new ArrayIterator(_children);
 		}
 		
 	}
