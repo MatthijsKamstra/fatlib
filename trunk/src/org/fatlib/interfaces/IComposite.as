@@ -6,5 +6,6 @@
 		function remove(component:IComponent):void;
 		function removeByID(id:*):void;
 		function getChild(id:*):*;
+		function hasChild(id:*):Boolean;
 	}
 }
