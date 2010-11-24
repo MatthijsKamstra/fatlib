@@ -10,6 +10,7 @@
 	import flash.utils.Dictionary;
 	import org.fatlib.display.Text;
 	import org.fatlib.events.LoadProgressEvent;
+	import org.fatlib.interfaces.IAssetBank;
 	import org.fatlib.Log;
 	import org.fatlib.utils.ArrayUtils;
 	
@@ -17,7 +18,7 @@
 	import org.fatlib.utils.ClassUtils;
 	import org.fatlib.utils.NetUtils;
 	
-	public class AssetBank extends EventDispatcher implements IDestroyable
+	public class AssetBank extends EventDispatcher implements IDestroyable, IAssetBank
 	{
 		[Event(name="onLoaded", 	type="org.fatlib.events.LoadProgressEvent")]
 		[Event(name="onError",	 	type="org.fatlib.events.LoadProgressEvent")]
@@ -37,7 +38,7 @@
 			_failedURLs = [];
 		}
 		
-		public function add(url:String, id:String=null):void
+		public function add(url:String, id:String = null, params:Object = null):void
 		{
 			if (id == null) id = url;
 			Log.log("[AssetBank] add "+url+" as "+id);
