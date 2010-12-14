@@ -163,6 +163,20 @@ package org.fatlib.utils
 			return p;
 		}
 		
+		/**
+		 * 
+		 * Finds the new value of an amount after a given time with a given halflife
+		 * 
+		 * @param	initialAmount
+		 * @param	seconds
+		 * @param	halflife
+		 * @return
+		 */
+		static public function decay(initialAmount:Number, seconds:Number, halflife:Number = 1):Number
+		{
+			return initialAmount / (Math.pow(2, (seconds / halflife)));
+		}
+		
 		
 	}
 	
