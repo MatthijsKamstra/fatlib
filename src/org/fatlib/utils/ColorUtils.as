@@ -58,6 +58,12 @@
 			return rgb.b + (rgb.g * 256) + (rgb.r * 256 * 256);
 		}
 		
+		public static function gray(byte:uint):int
+		{
+			if (byte > 255) byte = 255;
+			return byte + (byte * 256) + (byte * 256 * 256);
+		}
+		
 	}
 	
 }
