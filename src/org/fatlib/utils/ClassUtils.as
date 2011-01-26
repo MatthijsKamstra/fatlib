@@ -3,8 +3,6 @@ package org.fatlib.utils
 	
 	import flash.display.MovieClip;
 	import flash.utils.*;
-
-	
 	/**
 	 * Provides helper methods for dealing with class introspection or
 	 * object instantiation
@@ -33,7 +31,14 @@ package org.fatlib.utils
 		 */
 		public static function instantiateSymbol(swf:MovieClip, linkageID:String='Content'):Object
 		{
-			var classReference:Class = swf.loaderInfo.applicationDomain.getDefinition(linkageID) as Class;
+			try
+			{
+				var classReference:Class = swf.loaderInfo.applicationDomain.getDefinition(linkageID) as Class;
+			} catch (r:Error)
+			{
+				throw new Error('No symbol with linkage "' + linkageID + '" found in library');
+			}
+			
 			var sup:String = getSuperClassName(classReference);
 			var inst:Object;
 			switch (sup)
