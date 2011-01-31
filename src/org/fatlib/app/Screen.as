@@ -33,8 +33,8 @@
 		{
 			_delay = new Delay();
 			_display = new Sprite();
-			_display.addEventListener(MouseEvent.CLICK, onClick, false, 0, true);
-			_display.addEventListener(Event.ENTER_FRAME, onFrame, false, 0, true);
+			_display.addEventListener(MouseEvent.CLICK, onClick);
+			_display.addEventListener(Event.ENTER_FRAME, onFrame);
 		}
 		
 		
@@ -77,6 +77,8 @@
 		
 		public function destroy():void
 		{
+			_display.removeEventListener(MouseEvent.CLICK, onClick);
+			_display.removeEventListener(Event.ENTER_FRAME, onFrame);
 			_delay.destroy();
 			DisplayUtils.recursiveStop(_display);
 		}
