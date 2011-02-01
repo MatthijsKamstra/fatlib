@@ -96,7 +96,7 @@
 		}
 		
 		
-		final protected function gotoScreen(screenName:String, launchVars:Object=null, transition:String = null):void
+		protected function gotoScreen(screenName:String, launchVars:Object=null, transition:String = null):void
 		{
 			_manager.goto(screenName, launchVars, transition);
 		}
