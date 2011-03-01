@@ -1,6 +1,6 @@
 ﻿package org.fatlib.interfaces 
 {
-	public interface IComposite extends IComponent
+	public interface IComposite extends IComponent, IIterable
 	{
 		function add(component:IComponent):void;
 		function remove(component:IComponent):void;
