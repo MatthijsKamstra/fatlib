@@ -16,15 +16,16 @@
 		private var startTime:Number;
 		private var t:TextField;
 		
-		public function FPS():void
+		public function FPS(col:int = 0x00CCFF):void
 		{
 			var tf:TextFormat = new TextFormat();
-			tf.color = 0x00CCFF;
+			tf.color = col;
 			tf.font = '_sans';
 			t = new TextField();
 			t.defaultTextFormat = tf;
 			t.selectable = false;
 			t.mouseEnabled = false;
+			mouseChildren = mouseEnabled = false;
 									
 			addChild(t);
 			checkCounter = checkRate;
