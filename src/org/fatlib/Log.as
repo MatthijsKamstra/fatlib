@@ -1,7 +1,10 @@
 ﻿package org.fatlib
 {
 	
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.external.ExternalInterface;
+	import org.fatlib.events.CustomEvent;
 	
 	/**
 	 * A logging class
@@ -11,11 +14,14 @@
 	 */
 	public class Log 
 	{
+		static public const MESSAGE:String = "onMessage";
+		public static var dispatcher:EventDispatcher = new EventDispatcher();
 		
 		public static const LOG:int = 1;
 		public static const DEBUG:int = 2;
 		public static const WARN:int = 3;
 		public static const ERROR:int = 4;
+		
 		
 		public static var LOG_LEVEL:int = LOG;
 		
@@ -52,6 +58,8 @@
 		private static function send(level:String, item:*):void 
 		{
 			if (!ALLOW_LOGGING) return;
+			
+			dispatcher.dispatchEvent(new CustomEvent(MESSAGE, { level:level, content:item } ));
 			
 			// trace to flash 
 			trace(level + ': ' + item);
