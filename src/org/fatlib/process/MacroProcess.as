@@ -2,6 +2,7 @@
 {
 	import flash.errors.IllegalOperationError;
 	import flash.events.Event;
+	import org.fatlib.interfaces.IDestroyable;
 	import org.fatlib.interfaces.IProcess;
 	
 	/**
@@ -132,6 +133,20 @@
 			
 		}
 		
+		override public function destroy():void 
+		{
+			
+			for each(var p:IProcess in _processes)
+			{
+				if (p == _currentProcess)
+				{
+					killCurrentProcess();
+				} else 
+					if (p is IDestroyable) IDestroyable(p).destroy();
+			}
+			_currentProcess = null;
+			_processes = null;
+		}
 		
 	
 	}
