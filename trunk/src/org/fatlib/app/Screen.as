@@ -75,6 +75,8 @@
 			_manager = value;
 		}
 		
+		public function get manager():ScreenManager { return _manager; }
+		
 		public function destroy():void
 		{
 			_display.removeEventListener(MouseEvent.CLICK, onClick);
