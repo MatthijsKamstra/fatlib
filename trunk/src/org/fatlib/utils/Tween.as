@@ -56,7 +56,7 @@
 			if (!_activeTweens)_activeTweens = new Dictionary(false);
 			var t:TweenInstance = new TweenInstance( target, milliseconds, properties, transition, onComplete, onCompleteParams);
 			_activeTweens[t] = 1;
-			t.addEventListener(Event.COMPLETE, onTweenComplete);
+			t.addEventListener(Event.COMPLETE, onTweenComplete,false,0,true);
 			t.start();
 		}
 		
@@ -115,7 +115,7 @@ internal class TweenInstance extends EventDispatcher
 	internal function start():void
 	{
 		_startTime = getTimer();
-		_frameSource.addEventListener(Event.ENTER_FRAME, onFrame);
+		_frameSource.addEventListener(Event.ENTER_FRAME, onFrame, false,0,true);
 	}
 	
 	private function onFrame(e:Event):void 
