@@ -16,9 +16,9 @@ package org.fatlib.ui
 	 */
 	public class StackButton 
 	{
+		public var resetPlayhead:Boolean = false;
 		private var _mc:MovieClip;
 		private var _enabled:Boolean;
-		private var _selected:Boolean;
 		private var _over:Boolean;
 		
 		public function StackButton(mc:MovieClip) 
@@ -26,8 +26,6 @@ package org.fatlib.ui
 			_mc = mc;
 			if (!_mc['up']) throw new Error('button needs an up state');
 			_mc.addEventListener(Event.REMOVED_FROM_STAGE, onRemoved);
-			
-			
 			
 			_mc.addEventListener(MouseEvent.MOUSE_OVER, onMouse);
 			_mc.addEventListener(MouseEvent.MOUSE_OUT, onMouse);
@@ -52,46 +50,32 @@ package org.fatlib.ui
 				}
 			}
 			
-			enable(true);
+			enable();
 		}
 		
-		public function select(selected:Boolean):void
+		public function enable():void
 		{
-			_selected = selected;
+			_enabled = true;
 			
-			_mc.buttonMode = !selected;
-			_mc.useHandCursor = !selected;
+			_mc.buttonMode = true;
+			_mc.useHandCursor =  true;
+			_mc.mouseEnabled =  true;
 			
-			if (_selected)
+			if (_over)
 			{
-				setState('selected');
+				setState('over');
 			} else {
-				if (_over)
-				{
-					setState('over');
-				} else {
-					setState('up');
-				}
+				setState('up');
 			}
 		}
 		
-		public function enable(enabled:Boolean):void
+		public function disable(state:String='disabled'):void 
 		{
-			_enabled = enabled;
-			
-			_mc.buttonMode = enabled;
-			_mc.useHandCursor = enabled;
-			if (_enabled)
-			{
-				if (_over)
-				{
-					setState('over');
-				} else {
-					setState('up');
-				}
-			} else {
-				setState('disabled');
-			}
+			_enabled = false;
+			_mc.buttonMode = false;
+			_mc.useHandCursor =  false;
+			_mc.mouseEnabled =  false;
+			setState(state);
 		}
 		
 		private function onMouse(e:MouseEvent):void 
@@ -107,7 +91,7 @@ package org.fatlib.ui
 					break;
 			}
 			
-			if (!_enabled || _selected) return;
+			if (!_enabled) return;
 		
 			switch(e.type)
 			{
@@ -130,7 +114,7 @@ package org.fatlib.ui
 				if (c.name == state)
 				{
 					c.visible = true;
-					if (c is MovieClip) MovieClip(c).gotoAndPlay(1);
+					if (c is MovieClip && resetPlayhead) MovieClip(c).gotoAndPlay(1);
 				} else if (c.name != 'hit')
 				{
 					c.visible = false;
