@@ -35,9 +35,10 @@
 			_display = new Sprite();
 			_display.addEventListener(MouseEvent.CLICK, onClick);
 			_display.addEventListener(Event.ENTER_FRAME, onFrame);
+			_display.addEventListener(MouseEvent.MOUSE_OVER, onOver);
 		}
 		
-		
+
 		
 		/**
 		 * Called by ScreenManager when the screen is added to the stage
@@ -51,10 +52,7 @@
 		 */
 		public function handleRemoved():void
 		{
-		
 		}
-		
-		
 		
 		public function get screenName():String { return _screenName; }
 		
@@ -81,6 +79,7 @@
 		{
 			_display.removeEventListener(MouseEvent.CLICK, onClick);
 			_display.removeEventListener(Event.ENTER_FRAME, onFrame);
+			_display.removeEventListener(MouseEvent.MOUSE_OVER, onOver);
 			_delay.destroy();
 			DisplayUtils.recursiveStop(_display);
 		}
@@ -92,9 +91,12 @@
 		{
 		}
 		
+		protected function handleOver(targetName:String):void 
+		{
+		}
+		
 		protected function handleFrame():void
 		{
-			
 		}
 		
 		
@@ -116,6 +118,13 @@
 		{
 			handleClicked(e.target.name);
 		}
+
+		private function onOver(e:MouseEvent):void 
+		{
+			handleOver(e.target.name);
+		}
+		
+		
 		
 		private function onFrame(e:Event):void 
 		{
