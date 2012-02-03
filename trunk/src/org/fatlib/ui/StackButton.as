@@ -16,10 +16,19 @@ package org.fatlib.ui
 	 */
 	public class StackButton 
 	{
-		public var resetPlayhead:Boolean = false;
+		public var resetPlayhead:Boolean = true;
 		private var _mc:MovieClip;
 		private var _enabled:Boolean;
 		private var _over:Boolean;
+
+		
+		
+		static public function register(mc:MovieClip, resetPlayhead:Boolean = true):StackButton
+		{
+			var s:StackButton = new StackButton(mc);
+			s.resetPlayhead = resetPlayhead;
+			return s;
+		}
 		
 		public function StackButton(mc:MovieClip) 
 		{
@@ -53,6 +62,8 @@ package org.fatlib.ui
 			enable();
 		}
 		
+		
+		
 		public function enable():void
 		{
 			_enabled = true;
@@ -76,6 +87,11 @@ package org.fatlib.ui
 			_mc.useHandCursor =  false;
 			_mc.mouseEnabled =  false;
 			setState(state);
+		}
+		
+		public function set visible(b:Boolean):void
+		{
+			_mc.visible = b;
 		}
 		
 		private function onMouse(e:MouseEvent):void 
@@ -129,6 +145,7 @@ package org.fatlib.ui
 			_mc.removeEventListener(MouseEvent.MOUSE_OUT, onMouse);
 		}
 		
+
 		
 	}
 
