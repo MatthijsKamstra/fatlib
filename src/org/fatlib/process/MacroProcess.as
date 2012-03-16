@@ -2,7 +2,6 @@
 {
 	import flash.errors.IllegalOperationError;
 	import flash.events.Event;
-	import org.fatlib.interfaces.IDestroyable;
 	import org.fatlib.interfaces.IProcess;
 	
 	/**
@@ -22,6 +21,7 @@
 		 * Start the next process as soon as a process completes?
 		 */
 		private var _autoContinue:Boolean = true;
+		protected var _isSubprocessRunning:Boolean;
 		
 		
 		/**
@@ -52,14 +52,10 @@
 			if (_processes.length == 1 && _autoExecute) execute();
 		}
 		
-		/**
-		 * Terminates the process
-		 */
-		override public function terminate():void 
+		override public function destroy():void 
 		{
-			
-			_processes = null;
-			super.terminate();
+			for each(var p:IProcess in _processes)
+				p.destroy();
 		}
 		
 		
@@ -79,7 +75,7 @@
 		
 		////////////////
 
-		private function startNextProcess():void
+		public function startNextProcess():void
 		{
 			if (_processes.length == 0) 
 			{
@@ -91,10 +87,12 @@
 			
 			if (_currentProcess is AsyncProcess)
 			{
+				_isSubprocessRunning = true;
 				var async:AsyncProcess = _currentProcess as AsyncProcess;
 				async.addEventListener(Event.COMPLETE, onSubprocessComplete);
 				async.execute();
 			} else {
+				_isSubprocessRunning = false;
 				_currentProcess.execute();
 				subprocessComplete();
 			}
@@ -102,11 +100,13 @@
 		
 		private function onSubprocessComplete(e:Event):void 
 		{
+			
 			subprocessComplete()
 		}
 		
 		private function subprocessComplete():void
 		{
+			_isSubprocessRunning = false;
 			killCurrentProcess();
 			_processes.shift();
 			
@@ -115,8 +115,6 @@
 				startNextProcess();
 			} 
 		}
-		
-	
 		
 		private function killCurrentProcess():void
 		{
@@ -133,20 +131,6 @@
 			
 		}
 		
-		override public function destroy():void 
-		{
-			
-			for each(var p:IProcess in _processes)
-			{
-				if (p == _currentProcess)
-				{
-					killCurrentProcess();
-				} else 
-					if (p is IDestroyable) IDestroyable(p).destroy();
-			}
-			_currentProcess = null;
-			_processes = null;
-		}
 		
 	
 	}
