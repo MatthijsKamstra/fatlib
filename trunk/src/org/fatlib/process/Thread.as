@@ -21,9 +21,9 @@
 		{
 			if (state == AsyncProcess.READY )
 			{
-				if (_processes.length > 0)
+				if (!_isSubprocessRunning)
 				{
-					execute();
+					startNextProcess();
 				} 
 			}
 		}
